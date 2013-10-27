@@ -1,0 +1,8 @@
+#!/bin/bash
+# This hook is run after a new virtualenv is activated.
+
+if  [[ ${VIRTUAL_ENV} == ${WORKON_HOME}/TEMP__* ]];
+then
+    pip install tox
+    pip install -U pip
+fi

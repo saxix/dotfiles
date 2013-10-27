@@ -1,0 +1,54 @@
+[github]
+    user = saxix
+
+[user]
+    name = sax
+    email = s.apostolico@gmail.com
+
+[color]
+    ui = auto
+
+[color "diff"]
+    meta = blue bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow bold
+    remote = green bold
+    plain = red bold
+
+[color "status"]
+    added = green bold
+    changed = yellow
+    untracked = blue bold
+
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    datetag = !git tag `date \"+%Y%m%d%H%M\"`
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+
+[hub]
+    protocol = https
+
+[core]
+    pager = less -R
+    autocrlf = input
+
+[push]
+    default = matching
+
+[branch]
+    autosetuprebase = always
+
+[help]
+    autocorrect = 1

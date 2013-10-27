@@ -1,0 +1,4 @@
+.*.sw?
+.swp
+*~
+.bash/private.sh
