@@ -5,6 +5,44 @@
     name = sax
     email = s.apostolico@gmail.com
 
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    datetag = !git tag `date \"+%Y%m%d%H%M\"`
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+
+# stash
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+    snapshots = !git stash list --grep snapshot
+
+
+# branch
+    b = branch -v # branch (verbose)
+
+# diff
+    d = diff # diff unstaged changes
+    dc = diff --cached # diff staged changes
+    last = diff HEAD^ # diff last committed change
+
+
+# reset
+    unstage = reset HEAD # remove files from index (tracking)
+    uncommit = reset --soft HEAD^ # go back before last commit, with files in uncommitted state
+    filelog = log -u # show changes to a file
+    mt = mergetool # fire up the merge tool
+# log
+    l = log --graph --date=short
+    changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+    short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+    changelog = log --pretty=format:\" * %s\"
+    shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+
 [color]
     ui = auto
 
@@ -25,30 +63,30 @@
     changed = yellow
     untracked = blue bold
 
-[alias]
-    st = status
-    ci = commit
-    br = branch
-    co = checkout
-    df = diff
-    lg = log -p
-    datetag = !git tag `date \"+%Y%m%d%H%M\"`
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    ls = ls-files
-
-[hub]
-    protocol = https
-
 [core]
     pager = less -R
     autocrlf = input
 
-[push]
-    default = matching
-
 [branch]
     autosetuprebase = always
 
+
+[format]
+  pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+
 [help]
     autocorrect = 1
+
+[hub]
+    protocol = https
+
+[merge]
+  summary = true
+  verbosity = 1
+  tool = mvimdiff
+
+
+[push]
+    default = tracking
+
+
