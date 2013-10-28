@@ -37,10 +37,7 @@ def _init():
     import pprint
     import hashlib
     import datetime
-    try:
-        import __builtin__
-    except ImportError:
-        import builtins as __builtin__
+    import __builtin__
 
     __import__('rlcompleter')
     histdir = os.path.expanduser('~/.pyhist')
