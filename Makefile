@@ -20,6 +20,7 @@ install-bin:
 
 install-git:
 	ln -fs `pwd`/git/.gitconfig ${PREFIX}/.gitconfig
+	ln -fs `pwd`/git/.gitignore ${PREFIX}/.gitignore
 
 install-python:
 	ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
