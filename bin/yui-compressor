@@ -1,0 +1,17 @@
+#!/bin/sh
+needle='min.js'
+if [[ "$1" == *"$needle"* ]]; then
+  exit 0
+fi
+
+
+YUI_JAR=$HOME/bin/yui-compressor-2.4.7.jar
+
+# Include the wrappers utility script
+. /usr/lib/java-wrappers/java-wrappers.sh
+
+# We need a java5 runtime
+find_java_runtime java5
+
+# Run YUI Compressor
+run_java -jar $YUI_JAR $extra_args "$@"
