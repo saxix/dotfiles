@@ -61,6 +61,7 @@ esac
 
 source ~/.bash/.environment.sh
 source ~/.bash/.bash_aliases.sh
+source ~/.bash/.cd_bash_completition.sh
 source ~/.bash/.fabric-bash-completition.sh
 source ~/.bash/.django_bash_completion.sh
 source ~/.bash/.git-flow-completion.sh
