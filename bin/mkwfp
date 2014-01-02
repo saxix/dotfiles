@@ -1,0 +1,52 @@
+#!/bin/bash
+BASEDIR="/data/PROGETTI/ONU_WorldFoodProgramme"
+
+
+if [ "$1" == "" ]; then
+    exit 1
+fi
+
+PROJECT=$1
+NAME=`echo $PROJECT | sed "s|wfp[-_]||"`
+DIRNAME="wfp-${NAME}"
+PREFIX=`echo $DIRNAME| sed "s|-|_|"`
+FULLTARGETDIR=${BASEDIR}/${DIRNAME}
+
+mkdir -p ${FULLTARGETDIR}
+
+cd ${FULLTARGETDIR}
+
+. ~/.bash/virtualenvwrapper.sh
+
+mkvirtualenv $NAME > /dev/null
+echo ${FULLTARGETDIR}/src > ${VIRTUAL_ENV}/.project
+
+TARGET="$HOME/.${PREFIX}_credentials.json"
+if [ ! -f $TARGET ]; then
+cat >$TARGET  <<EOF
+{"databases": {"<PRJ>": {"password": "", "user": ""}},
+"wings": {"password": "", "username": ""},
+"ldap": {"password": "", "username": ""}}
+EOF
+> /dev/null
+
+sed -i "s|<PRJ>|$NAME|" "$TARGET" > /dev/null
+ln -s "$TARGET" "${BASE}/src/.${PREFIX}_credentials.json" > /dev/null
+fi
+
+${VIRTUAL_ENV}/bin/easy_install -U distribute > /dev/null
+${VIRTUAL_ENV}/bin/pip install -e /data/VENV/LIB/django/stable/ > /dev/null
+echo "CREATE DATABASE IF NOT EXISTS $PREFIX DEFAULT COLLATE utf8_general_ci;" | mysql -u root
+cd ${FULLTARGETDIR}
+wget -qO- http://readthedocs.wfp.org/docs/wfp-django-project-official-template/en/latest/_static/init.sh | sed "s/\$1/${PROJECT}/g" | sh || exit 1
+mv ${FULLTARGETDIR}/wfp-${PROJECT}  ${FULLTARGETDIR}/src || exit 1
+
+echo "Done !!"
+echo "credential created in ${TARGET}"
+echo "django version:" `python -c "import django; print django.get_version()"`
+echo "virtualenv created in: ${VIRTUAL_ENV}"
+echo
+echo "type 'workon ${NAME}' to activate virtualenv"
+
+
+

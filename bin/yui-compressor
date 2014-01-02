@@ -1,11 +1,10 @@
-#!/bin/sh
-needle='min.js'
-if [[ "$1" == *"$needle"* ]]; then
+#!/bin/bash
+
+if [[ "$1" =~ ".min.js" ]]; then
   exit 0
 fi
 
-
-YUI_JAR=$HOME/bin/yui-compressor-2.4.7.jar
+YUI_JAR=$HOME/bin/yuicompressor-2.4.7.jar
 
 # Include the wrappers utility script
 . /usr/lib/java-wrappers/java-wrappers.sh
