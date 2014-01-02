@@ -9,7 +9,8 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/jni/:$ORACLE_HOME
 export TNS_ADMIN=~
 
 # python
-export PYTHONDONTWRITEBYTECODE=1
+export PYTHONDONTWRITEBYTECODE=0
+unset PYTHONDONTWRITEBYTECODE
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHASHSEED=random
 
@@ -36,7 +37,7 @@ if [ `id -u` != '0' ]; then
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_REQUIRE_VIRTUALENV=true
     export PIP_RESPECT_VIRTUALENV=true
-    export PIP_DOWNLOAD_CACHE=/data/pip_cache/
+    export PIP_DOWNLOAD_CACHE=/data/pip_cache
     export PIP_USE_MIRRORS=true
 fi
 

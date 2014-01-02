@@ -59,14 +59,16 @@ xterm*|rxvt*)
 esac
 
 
+source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
 source ~/.bash/.bash_aliases.sh
-source ~/.bash/.cd_bash_completition.sh
-source ~/.bash/.fabric-bash-completition.sh
-source ~/.bash/.django_bash_completion.sh
-source ~/.bash/.git-flow-completion.sh
 source ~/.bash/.git-prompt
 source ~/.bash/virtualenvwrapper.sh
+
+source ~/.bash/.bash-completion-fabric.sh
+source ~/.bash/.bash-completion-django.sh
+source ~/.bash/.bash-completion-gitflow.sh
+source ~/.bash/.bash-completion-cd.sh
 
 
 # enable programmable completion features (you don't need to enable
