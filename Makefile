@@ -13,6 +13,12 @@ install-bash:
 	ln -fs ${PREFIX}/.bash/.bashrc ${PREFIX}/.bashrc
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
+install-git-flow:
+	curl -O https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
+	chmod u+x gitflow-installer.sh
+	INSTALL_PREFIX=~/bin ./gitflow-installer.sh
+	rm -f gitflow-installer.sh
+
 
 install-bin:
 	ln -fs `pwd`/bin/ ${PREFIX}/
