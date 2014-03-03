@@ -5,7 +5,7 @@ mkdirs:
 	sh ${PWD}/.bash/.environment.sh; mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE}
 
 
-all: mkdirs install-vcprompt install-bash install-bin install-python
+all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 
 
 install-bash:
@@ -22,6 +22,10 @@ install-git-flow:
 
 install-bin:
 	ln -fs `pwd`/bin/ ${PREFIX}/
+
+
+install-pip:
+	ln -fs `pwd`/pip/pip.conf ${PREFIX}/.pip/
 
 
 install-git:

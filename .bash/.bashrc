@@ -63,7 +63,9 @@ source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
 source ~/.bash/.bash_aliases.sh
 source ~/.bash/.git-prompt
-source ~/.bash/virtualenvwrapper.sh
+if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh

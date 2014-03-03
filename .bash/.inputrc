@@ -10,3 +10,5 @@ set show-all-if-ambiguous on
 
 "\e[5~": previous-history
 "\e[6~": next-history
+
+"\C-x\"": "\"\"C-b"

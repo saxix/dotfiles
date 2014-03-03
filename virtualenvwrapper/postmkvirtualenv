@@ -1,8 +1,13 @@
 #!/bin/bash
 # This hook is run after a new virtualenv is activated.
 
-if  [[ ${VIRTUAL_ENV} == ${WORKON_HOME}/TEMP__* ]];
+#if  [[ ${VIRTUAL_ENV} == ${WORKON_HOME}/TEMP__* ]];
+#then
+#    pip install tox
+#    pip install -U pip
+#fi
+
+if  [ -f ${WORKON_HOME}/distribute*.* ];
 then
-    pip install tox
-    pip install -U pip
+    rm ${WORKON_HOME}/distribute*.*
 fi
