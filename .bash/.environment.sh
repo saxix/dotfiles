@@ -1,4 +1,7 @@
+export PATH=/data/jdk/bin/:~/bin:$PATH
 
+
+# Java
 export JAVA_HOME=/data/jdk
 export PYCHARM_JDK=/data/jdk
 export CLASSPATH=$CLASSPATH:/usr/share/java/libreadline-java.jar
