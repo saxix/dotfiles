@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$1" =~ ".min.js" ]]; then
+if [[ "$1" =~ ".min.js" || "$1" =~ ".min.css" || $1 == test_* || $1 == *casper* ]] ; then
   exit 0
 fi
 
