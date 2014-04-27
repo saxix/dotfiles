@@ -1,6 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -58,6 +55,9 @@ xterm*|rxvt*)
     ;;
 esac
 
+if [ $(uname) == "Darwin" ];then
+    source $(brew --prefix)/etc/bash_completion
+fi
 
 source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
@@ -74,6 +74,7 @@ source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
 source ~/.bash/.bash-completion-cd.sh
 
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh # This loads NVM
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
