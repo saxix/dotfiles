@@ -70,6 +70,7 @@
 
 [branch]
     autosetuprebase = always
+	autosetupmerge = true
 
 
 [format]
@@ -91,3 +92,5 @@
     default = tracking
 
 
+[diff]
+	external = /home/sax/bin/git-diff

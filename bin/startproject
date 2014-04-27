@@ -1,0 +1,36 @@
+#!/bin/bash
+#exec > /dev/null 2>&1
+
+BASE=$PWD
+NAME=`basename $PWD | sed "s|wfp-||"`
+PREFIX=`basename $PWD | sed "s|-|_|"`
+
+. ~/.bash/virtualenvwrapper.sh
+
+mkvirtualenv $NAME > /dev/null
+echo ${BASE}/src > ${VIRTUAL_ENV}/.project
+
+
+TARGET="$HOME/.${PREFIX}_credentials.json"
+if [ ! -f $TARGET ]; then
+cat >$TARGET  <<EOF
+{"databases": {"<PRJ>": {"password": "", "user": ""}},
+"wings": {"password": "", "username": ""},
+"ldap": {"password": "", "username": ""}}
+EOF
+> /dev/null
+
+sed -i "s|<PRJ>|$NAME|" "$TARGET" > /dev/null
+ln -s "$TARGET" "${BASE}/src/.${PREFIX}_credentials.json" > /dev/null
+fi
+
+${VIRTUAL_ENV}/bin/easy_install -U distribute > /dev/null
+${VIRTUAL_ENV}/bin/pip install -e /data/VENV/LIB/django/stable/ > /dev/null
+echo "CREATE DATABASE IF NOT EXISTS $PREFIX DEFAULT COLLATE utf8_general_ci;" | mysql -u root
+
+echo "Done !!"
+echo "credential created in ${TARGET}"
+echo "django version:" `python -c "import django; print django.get_version()"`
+echo "virtualenv created in: ${VIRTUAL_ENV}"
+echo
+echo "type 'workon ${NAME}' to activate virtualenv"

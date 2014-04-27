@@ -1,16 +1,11 @@
 
-_dir_completition_factory(){
-
-}
-
-
 PROJECT_DIR="/data/PROGETTI/saxix/"
 _cdd_completion()
 {
 	prev=${COMP_WORDS[COMP_CWORD-1]}
 	cur=`_get_cword`
 
-	APPS=`cd "$PROJECT_DIR"; for f in django-*; do echo $f; done | command \sed "s|django-||" | command \sort`
+	APPS=`cd "$PROJECT_DIR"; for f in *; do echo $f; done | command \sort`
     COMPREPLY=( $( compgen -W '$APPS' -- "$cur" ) )
 }
 complete -o default -F _cdd_completion cdd
@@ -33,7 +28,7 @@ function cdw {
 
 function cdd {
 	if [ $1 ] ;then
-		cd "$PROJECT_DIR/django-$1/"
+		cd "$PROJECT_DIR/$1/"
 	fi
 }
 

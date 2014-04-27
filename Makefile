@@ -8,12 +8,14 @@ endif
 	source "${PWD}/.bash/.environment.sh"
 	mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE} ${PREFIX}/bin
 
-
 install: mkdirs install-vcprompt install-bash install-bin install-python install-virtualenvwrapper
 
 
 install-bash:
 	@echo install-bash
+ifeq ($(shell uname),Darwin)
+
+endif
 	@bash -c "if [ '-h ${PREFIX}/.bash' ]; then rm '${PREFIX}/.bash'; fi"
 	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
 
@@ -22,6 +24,13 @@ install-bash:
 
 	@bash -c "if [ '-h ${PREFIX}/.inputrc' ]; then rm '${PREFIX}/.inputrc'; fi"
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
+
+
+install-git-flow:
+	curl -O https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
+	chmod u+x gitflow-installer.sh
+	INSTALL_PREFIX=~/bin ./gitflow-installer.sh
+	rm -f gitflow-installer.sh
 
 
 install-bin:
@@ -33,7 +42,7 @@ install-git:
 	@echo install-git
 	ln -fs `pwd`/git/.gitconfig ${PREFIX}/.gitconfig
 	ln -fs `pwd`/git/.gitignore ${PREFIX}/.gitignore
-	curl -o ~/.git-completion.bash https://github.com/git/git/raw/master/contrib/completion/git-completion.bash -OL
+	curl -o ~/.bash/.git-completion.bash https://github.com/git/git/raw/master/contrib/completion/git-completion.bash -OL
 
 install-python:
 	@echo install-python
@@ -49,6 +58,13 @@ install-vcprompt:
 	@rm -rf /tmp/vcprompt
 
 
-install-virtualenvwrapper: 
+install-virtualenvwrapper:
+ifeq ($(shell uname),Darwin)
+
+endif
 	mkdir -p ${VIRTUALENVWRAPPER_HOOK_DIR}
 	ln -fs `pwd`/virtualenvwrapper/* ${VIRTUALENVWRAPPER_HOOK_DIR}/
+
+
+install-local:
+	@echo install-local
