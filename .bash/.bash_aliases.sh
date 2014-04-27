@@ -10,9 +10,12 @@ fi
 
 alias tree='tree -AC -I "*.pyc|_darcs|cabal-dev|dist|state"'
 
-alias apt-get='sudo apt-get'
-alias open='xdg-open'
-alias e='gvim'
+if [ $(uname) == "Linux" ];then
+    alias apt-get='sudo apt-get'
+    alias open='xdg-open'
+fi
+
+
 alias l='less'
 alias ll='ls -al'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
@@ -26,7 +29,7 @@ bind '"\e[B"':history-search-forward
 alias ..='cd ..'
 alias .-='cd -'
 
-alias edit='$EDITOR $@'
+alias e='$EDITOR $@'
 
 alias mkvirtualenvtemp='mkvirtualenv TEMP__$RANDOM'
 

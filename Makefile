@@ -62,5 +62,13 @@ endif
 	ln -fs `pwd`/virtualenvwrapper/* ${VIRTUALENVWRAPPER_HOOK_DIR}/
 
 
-install-local:
+setup:
 	@echo install-local
+ifeq ($(shell uname),Darwin)
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    brew install tree bash-completion
+endif
+    sudo mkdir /data
+    chown sax /data
+    mkdir -p /data/{VENV/LIB,PROGETTI}
+

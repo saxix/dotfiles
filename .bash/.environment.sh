@@ -1,4 +1,4 @@
-export PATH=/data/jdk/bin/:~/bin:$PATH
+export PATH=/data/jdk/bin:~/bin:$PATH
 
 
 # Java
@@ -43,7 +43,7 @@ if [ `id -u` != '0' ]; then
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_REQUIRE_VIRTUALENV=true
     export PIP_RESPECT_VIRTUALENV=true
-    export PIP_DOWNLOAD_CACHE=/data/pip_cache
+#    export PIP_DOWNLOAD_CACHE=/data/pip_cache
 #    export PIP_USE_MIRRORS=true
 fi
 
