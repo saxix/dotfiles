@@ -15,11 +15,12 @@ ifeq ($(shell uname),Darwin)
 endif
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
 	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
-	@sh -c "if [ -e ~/.profile ]; then rm ~/.profile; fi"
+
+	@sh -c "if [ -h ~/.profile ]; then rm ~/.profile; fi"
 	ln -fs ${PREFIX}/.bash/.profile ${PREFIX}/.profile
 
-	@bash -c "if [ -h ${PREFIX}/.bash_profile ]; then rm ${PREFIX}/.bash_profile; fi"
-	ln -fs ${PREFIX}/.bash/.bash_profile ${PREFIX}/.bash_profile
+	@bash -c "if [ -h ${PREFIX}/.bashrc ]; then rm ${PREFIX}/.bashrc; fi"
+	ln -fs ${PREFIX}/.bash/.bashrc ${PREFIX}/.bashrc
 
 	@bash -c "if [ -h ${PREFIX}/.inputrc ]; then rm ${PREFIX}/.inputrc; fi"
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
