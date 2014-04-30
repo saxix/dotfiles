@@ -1,7 +1,7 @@
 [[ -s /home/sax/.nvm/nvm.sh ]] && . /home/sax/.nvm/nvm.sh # This loads NVM
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+#[ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
@@ -56,6 +56,10 @@ xterm*|rxvt*)
     ;;
 esac
 
+if [ $(uname) == "Darwin" ];then
+    source $(brew --prefix)/etc/bash_completion
+    source /sw/bin/init.sh
+fi
 
 source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
@@ -65,6 +69,7 @@ if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+source ~/.bash/..git-completion.bash
 source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
