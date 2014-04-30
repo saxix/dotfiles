@@ -1,4 +1,4 @@
-export PATH=/data/jdk/bin/:~/bin:$PATH
+export PATH=/data/jdk/bin:~/bin:$PATH
 
 
 # Java
@@ -38,12 +38,12 @@ if [ `id -u` != '0' ]; then
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
     export VIRTUALENVWRAPPER_HOOK_DIR=/data/VENV/.hooks
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=''
-    export VIRTUALENVWRAPPER_VIRTUALENV='/usr/bin/virtualenv'
+    export VIRTUALENVWRAPPER_VIRTUALENV='virtualenv'
 
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_REQUIRE_VIRTUALENV=true
     export PIP_RESPECT_VIRTUALENV=true
-    export PIP_DOWNLOAD_CACHE=/data/pip_cache
+#    export PIP_DOWNLOAD_CACHE=/data/pip_cache
 #    export PIP_USE_MIRRORS=true
 fi
 
