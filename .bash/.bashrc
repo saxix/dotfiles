@@ -69,7 +69,7 @@ if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-source ~/.bash/..git-completion.bash
+source ~/.bash/.git-completion.bash
 source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
