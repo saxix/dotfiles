@@ -10,7 +10,9 @@ all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 
 install-bash:
 	ln -fs `pwd`/.bash/ ${PREFIX}/
-	ln -fs ${PREFIX}/.bash/.bashr_profile ${PREFIX}/.bash_profile
+	@sh -c "if [ -e ~/.profile ]; then rm ~/.profile; fi"
+	ln -fs ${PREFIX}/.bash/.profile ${PREFIX}/.profile
+	ln -fs ${PREFIX}/.bash/.bashrc ${PREFIX}/.bashrc
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
 install-git-flow:

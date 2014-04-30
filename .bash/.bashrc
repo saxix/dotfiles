@@ -55,7 +55,7 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
+``````~~~~
 
 source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
