@@ -1,7 +1,0 @@
-#!/bin/bash
-
-source ~/.bash/.lib.sh
-
-echo ${PWD} > $VIRTUAL_ENV/.project
-
-addtestvenv()
