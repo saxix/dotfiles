@@ -1,5 +1,8 @@
 .*.sw?
 .swp
 *~
+~*
 .bash/private.sh
 .idea
+*.pyc
+*.pyo
