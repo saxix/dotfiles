@@ -44,6 +44,8 @@
     changelog = log --pretty=format:\" * %s\"
     shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 
+[color]
+    ui = auto
 
 [color "diff"]
     meta = blue bold
