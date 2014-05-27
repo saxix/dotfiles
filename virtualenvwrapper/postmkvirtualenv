@@ -11,3 +11,4 @@ if  [ -f ${WORKON_HOME}/distribute*.* ];
 then
     rm ${WORKON_HOME}/distribute*.*
 fi
+pip install -U pip ipython ipdb
