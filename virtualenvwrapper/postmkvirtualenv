@@ -11,5 +11,5 @@ if  [ -f ${WORKON_HOME}/distribute*.* ];
 then
     rm ${WORKON_HOME}/distribute*.*
 fi
-pip install -U pip ipython ipdb
+pip install -U pip ipython ipdb requests
 pip install git+https://github.com/saxix/cookiecutter.git@work#egg=cookiecutter
