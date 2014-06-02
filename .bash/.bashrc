@@ -74,6 +74,8 @@ source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
 source ~/.bash/.bash-completion-cd.sh
+source ~/.bash/.bash-completion-cookiecutter.sh
+source ~/.bash/.bash-completion-vagrant.sh
 
 
 # enable programmable completion features (you don't need to enable
