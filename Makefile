@@ -25,6 +25,8 @@ endif
 	@bash -c "if [ -h ${PREFIX}/.inputrc ]; then rm ${PREFIX}/.inputrc; fi"
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
+	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
+
 install-git-flow:
 	curl -O https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
 	chmod u+x gitflow-installer.sh
