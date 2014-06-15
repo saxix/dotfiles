@@ -69,6 +69,10 @@ if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+if [ ! -e /tmp/proxypypi.pid ];then
+	proxypypi start
+fi
+
 source ~/.bash/.git-completion.bash
 source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
