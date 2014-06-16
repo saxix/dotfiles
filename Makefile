@@ -35,7 +35,11 @@ install-git-flow:
 
 
 install-bin:
-	ln -fs `pwd`/bin/ ${PREFIX}/
+	ln -fs `pwd`/bin/* ${PREFIX}/bin
+ifeq ($(shell uname),Darwin)
+else
+	rm ${PREFIX}/bin/ssh-copy-id.sh
+endif
 
 
 install-pip:

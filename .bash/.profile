@@ -20,3 +20,5 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+[ -s "/Users/sax/.nvm/nvm.sh" ] && . "/Users/sax/.nvm/nvm.sh" # This loads nvm

@@ -21,6 +21,8 @@ alias ll='ls -al'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias env='env|sort'
 alias rm='rm -i'
+alias broken='find -L . -type l -ls'
+alias proxypypi='$WORKON_HOME/sax/bin/proxypypi -P /tmp/proxypypi.pid -o ~/logs/proxypypi.out -l ~/logs/proxypypi.log -p 31415 -d /data/pypi'
 
 # These set up/down to do the history searching
 bind '"\e[A"':history-search-backward
