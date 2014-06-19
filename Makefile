@@ -5,7 +5,7 @@ mkdirs:
 	sh ${PWD}/.bash/.environment.sh; mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE}
 
 
-all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
+all: mkdirs install-vcprompt install-bash install-bin install-python install-pip install-sax-virtualenv
 
 
 install-bash:
@@ -66,3 +66,7 @@ install-vcprompt:
 install-virtualenvwrapper: mkdirs
 	mkdir -p ${VIRTUALENVWRAPPER_HOOK_DIR}
 	ln -fs `pwd`/virtualenvwrapper/* ${VIRTUALENVWRAPPER_HOOK_DIR}/
+
+install-sax-virtualenv:
+	virtualenv ${WORKON_HOME}/sax
+	. ${WORKON_HOME}/sax/bin/activate && ${WORKON_HOME}/sax/bin/pip install ipython uwsgi devpi

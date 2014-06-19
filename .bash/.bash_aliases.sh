@@ -8,28 +8,30 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-alias tree='tree -AC -I "*.pyc|_darcs|cabal-dev|dist|state"'
+#alias tree='tree -AC -I "*.pyc|_darcs|cabal-dev|dist|state"'
 
 if [ $(uname) == "Linux" ];then
     alias apt-get='sudo apt-get'
     alias open='xdg-open'
+elif [ $(uname) == "Darwin" ];then
+    alias broken='find -L . -type l -ls'
 fi
 
 
 alias l='less'
 alias ll='ls -al'
+alias la='ls -A'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias env='env|sort'
 alias rm='rm -i'
-alias broken='find -L . -type l -ls'
-alias proxypypi='$WORKON_HOME/sax/bin/proxypypi -P /tmp/proxypypi.pid -o ~/logs/proxypypi.out -l ~/logs/proxypypi.log -p 31415 -d /data/pypi'
+alias route='route -n'
+
 
 # These set up/down to do the history searching
 bind '"\e[A"':history-search-backward
 bind '"\e[B"':history-search-forward
 
 alias ..='cd ..'
-alias .-='cd -'
 
 alias e='$EDITOR $@'
 
