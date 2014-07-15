@@ -12,3 +12,9 @@ set show-all-if-ambiguous on
 "\e[6~": next-history
 
 "\C-x\"": "\"\"C-b"
+
+"(": "\C-v()\e[D"
+"\"": "\C-v\"\C-v\"\e[D"
+
+"[": "\C-v[]\e[D"
+
