@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for dir in `find . -maxdepth 1 -type d  -printf '%f '`; do
+for dir in `find . -maxdepth 1 -type d`; do
 	pushd "${dir}" > /dev/null
 	if [ -d "$PWD/.git" ]; then
 		echo "Current dir: ${PWD}"
