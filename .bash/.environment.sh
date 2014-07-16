@@ -1,4 +1,9 @@
 export PATH=/data/jdk/bin:~/bin:$PATH
+if [ $(uname) == "Darwin" ];then
+	export LC_ALL=en_US.UTF-8
+	export LANG=en_US.UTF-8
+	export PATH=/Library/PostgreSQL/9.3/bin/:$PATH
+fi
 
 
 # Java
@@ -10,6 +15,8 @@ export CLASSPATH=$CLASSPATH:/usr/share/java/libreadline-java.jar
 export ORACLE_HOME=/data/oracle/instantclient_11_2
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/jni/:$ORACLE_HOME
 export TNS_ADMIN=~
+export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
+export VERSIONER_PYTHON_PREFER_32_BIT=Yes
 
 # python
 export PYTHONDONTWRITEBYTECODE=1
