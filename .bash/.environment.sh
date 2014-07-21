@@ -5,6 +5,10 @@ if [ $(uname) == "Darwin" ];then
 	export PATH=/Library/PostgreSQL/9.3/bin/:$PATH
 fi
 
+# env
+DJANGO_DIR="/data/VENV/LIB/django/"
+PROJECT_DIR="/data/PROGETTI/saxix/"
+
 
 # Java
 export JAVA_HOME=/data/jdk

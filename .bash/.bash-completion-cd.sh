@@ -1,5 +1,5 @@
 
-PROJECT_DIR="/data/PROGETTI/saxix/"
+
 _cdd_completion()
 {
 	prev=${COMP_WORDS[COMP_CWORD-1]}
@@ -32,13 +32,13 @@ function cdd {
 	fi
 }
 
-DJANGO_DIR="/data/VENV/LIB/django/"
+
 _ad_completion()
 {
 	prev=${COMP_WORDS[COMP_CWORD-1]}
 	cur=`_get_cword`
 
-	DJANGOS=`cd "$DJANGO_DIR"; for f in */django; do echo $f; done | command \sed "s|/django||" | command \sort`
+	DJANGOS=`cd "$DJANGO_DIR"; for f in *.x/django; do echo $f; done | command \sed "s|/django||" | command \sort`
     COMPREPLY=( $( compgen -W '$DJANGOS' -- "$cur" ) )
 }
 complete -o default -F _ad_completion ad
