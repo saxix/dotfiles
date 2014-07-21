@@ -28,8 +28,10 @@ alias route='route -n'
 
 
 # These set up/down to do the history searching
-bind '"\e[A"':history-search-backward
-bind '"\e[B"':history-search-forward
+if [[ $- == *i* ]];then
+    bind '"\e[A"':history-search-backward
+    bind '"\e[B"':history-search-forward
+fi
 
 alias ..='cd ..'
 
