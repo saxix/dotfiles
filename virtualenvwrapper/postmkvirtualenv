@@ -20,4 +20,5 @@ fi
 
 if [[ $PWD == *ONU* ]]; then
 	pip install pytest
+	pip install git+https://github.com/saxix/cookiecutter.git@work#egg=cookiecutter
 fi
