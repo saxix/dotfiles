@@ -90,3 +90,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 DISPLAY=:0.0 ; export DISPLAY
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
