@@ -52,6 +52,7 @@ install-git:
 
 install-python:
 	ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
+	ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
 	ln -fs `pwd`/.ipython ${PREFIX}/.ipython
 
 
