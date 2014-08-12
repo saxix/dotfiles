@@ -6,3 +6,5 @@
 .DS_Store
 .bash/.pypirc
 .pypirc
+.ipython/profile_default/db/*
+history.sqlite
