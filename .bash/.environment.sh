@@ -5,11 +5,11 @@ if [ $(uname) == "Darwin" ];then
 	export PATH=/Library/PostgreSQL/9.3/bin/:$PATH
 fi
 # Django
-export DJANGO_14=/data/VENV/LIB/django/1.4.x
-export DJANGO_15=/data/VENV/LIB/django/1.5.x
-export DJANGO_16=/data/VENV/LIB/django/1.6.x
-export DJANGO_17=/data/VENV/LIB/django/1.7.x
-export DJANGO_DEV=/data/VENV/LIB/django/trunk
+export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
+export DJANGO_15='-e /data/VENV/LIB/django/1.5.x'
+export DJANGO_16='-e /data/VENV/LIB/django/1.6.x'
+export DJANGO_17='-e /data/VENV/LIB/django/1.7.x'
+export DJANGO_DEV='-e /data/VENV/LIB/django/trunk'
 
 # env
 DJANGO_DIR="/data/VENV/LIB/django/"
