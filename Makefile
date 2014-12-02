@@ -27,7 +27,6 @@ endif
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
 	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
-	ln -fs ${PREFIX}/.pydistutils.cfg ${PREFIX}/.pydistutils.cfg
 
 
 install-git-flow:
