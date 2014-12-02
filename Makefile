@@ -2,7 +2,7 @@ PREFIX=${HOME}
 DATADIR=/data
 
 mkdirs:
-	/bin/bash ${PWD}/.bash/.environment.sh; mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE}
+	source ${PWD}/.bash/.environment.sh && mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE}
 
 
 all: mkdirs install-vcprompt install-bash install-bin install-python install-pip install-sax-virtualenv
