@@ -55,12 +55,12 @@ function set_prompt() {
     # Virtual Env
     if [[ $VIRTUAL_ENV != "" ]]
        then
-           venv=" ${RED}(${VIRTUAL_ENV##*/}) ${NIL}\W"
+           venv=" ${RED}(${VIRTUAL_ENV##*/})${NIL}"
     else
-       venv='\W'
+       venv=''
     fi
 
-    export PS1="${myuser}:${venv}${branch} ${end}"
+    export PS1="${myuser}:${venv}${branch} \w\n${end}"
 }
 
 export PROMPT_COMMAND=set_prompt

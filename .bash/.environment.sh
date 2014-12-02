@@ -1,9 +1,12 @@
+#!/bin/bash
+
 export PATH=/data/jdk/bin:~/bin:$PATH
 if [ $(uname) == "Darwin" ];then
 	export LC_ALL=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	export PATH=/Library/PostgreSQL/9.3/bin/:$PATH
 fi
+
 # Django
 export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
 export DJANGO_15='-e /data/VENV/LIB/django/1.5.x'
@@ -40,6 +43,8 @@ export HISTCONTROL=erasedups
 export HISTSIZE=5000
 shopt -s histappend
 
+# node
+export NODE_PATH=/data/node_modules
 
 # virtualenvwrapper and pip
 if [ `id -u` != '0' ]; then

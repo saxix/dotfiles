@@ -11,6 +11,7 @@ all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 install-bash:
 	@echo install-bash
 ifeq ($(shell uname),Darwin)
+	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
 
 endif
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
@@ -26,6 +27,8 @@ endif
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
 	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
+	ln -fs ${PREFIX}/.pydistutils.cfg ${PREFIX}/.pydistutils.cfg
+
 
 install-git-flow:
 	curl -O https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
@@ -51,8 +54,8 @@ install-git:
 	ln -fs `pwd`/git/.gitignore ${PREFIX}/.gitignore
 
 install-python:
-	ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
-	ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
+	#ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
+	#ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
 	ln -fs `pwd`/.ipython ${PREFIX}/.ipython
 
 

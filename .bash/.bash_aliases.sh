@@ -25,6 +25,7 @@ alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias env='env|sort'
 alias rm='rm -i'
 alias route='route -n'
+alias devpi='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server'
 
 
 # These set up/down to do the history searching

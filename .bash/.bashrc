@@ -59,6 +59,9 @@ esac
 if [ $(uname) == "Darwin" ];then
     source $(brew --prefix)/etc/bash_completion
     source /sw/bin/init.sh
+    launchctl start net.devpi
+elif [[ $- == *i* ]]; then
+        devpi --host=0.0.0.0 --port=3141 --serverdir=/data/pypi_cache &
 fi
 
 source ~/.bash/.lib.sh
@@ -69,9 +72,6 @@ if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-if [[ $- == *i* ]]; then
-    PATH=/data/VENV/sax/bin /data/VENV/sax/bin/devpi-server --host=0.0.0.0 --port=3141 --serverdir=/data/pypi_cache --start
-fi
 
 source ~/.bash/.git-completion.bash
 source ~/.bash/.bash-completion-fabric.sh
