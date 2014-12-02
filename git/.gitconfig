@@ -38,6 +38,7 @@
     mt = mergetool # fire up the merge tool
 
 # log
+    pl = log --pretty=oneline
     l = log --graph --date=short
     changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
@@ -86,7 +87,7 @@
 [merge]
   summary = true
   verbosity = 1
-  tool = meld
+	tool = diffmerge
 
 
 [push]
@@ -96,5 +97,6 @@
 #[diff]
     #external = /home/sax/bin/git-diff
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
