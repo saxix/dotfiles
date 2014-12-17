@@ -4,19 +4,7 @@ if [[ "$1" =~ ".min.js" || "$1" =~ ".min.css" || $1 == test_* || $1 == *casper* 
   exit 0
 fi
 FILE=$1
-name=${FILE%.css}
 
-curl -X POST -s --data-urlencode "input@${name}.css" http://cssminifier.com/raw > ${name}.min.css
-
-#
-#YUI_JAR=$HOME/bin/yuicompressor-2.4.7.jar
-#
-## Include the wrappers utility script
-#. /usr/lib/java-wrappers/java-wrappers.sh
-#
-## We need a java5 runtime
-#find_java_runtime java5
-#
-## Run YUI Compressor
-#run_java -jar $YUI_JAR $extra_args "$@"
+YUI_JAR=$HOME/bin/yuicompressor-2.4.7.jar
+java -jar $YUI_JAR $extra_args "$@"
 #
