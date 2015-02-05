@@ -20,11 +20,19 @@ fi
 
 alias l='less'
 alias ll='ls -al'
+alias df='df -h'
+alias du='du -ch'
+
 alias la='ls -A'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias env='env|sort'
 alias rm='rm -i'
-alias route='route -n'
+
+if [ $(uname) == "Darwin" ];then
+    alias route='netstat -rn'
+else
+    alias route='route -n'
+fi
 alias devpi='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server'
 
 
@@ -35,11 +43,25 @@ if [[ $- == *i* ]];then
 fi
 
 alias ..='cd ..'
+alias ...='cd ../../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
 
 alias e='$EDITOR $@'
 
 alias mkvirtualenvtemp='mkvirtualenv TEMP__$RANDOM'
 
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
 
 
+alias ports='netstat -tulanp'
 
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC *.avi'

@@ -11,7 +11,7 @@ if  [ -f ${WORKON_HOME}/distribute*.* ];
 then
     rm ${WORKON_HOME}/distribute*.*
 fi
-pip install -U pip ipython pdbpp
+pip install -U pip ipython ipdb
 
 
 if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
@@ -19,6 +19,6 @@ if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
 fi
 
 if [[ $PWD == *ONU* ]]; then
-	pip install pytest
+	pip install pytest requests
 	pip install git+https://github.com/saxix/cookiecutter.git@work#egg=cookiecutter
 fi

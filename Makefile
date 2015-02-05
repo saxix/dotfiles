@@ -12,7 +12,6 @@ install-bash:
 	@echo install-bash
 ifeq ($(shell uname),Darwin)
 	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
-
 endif
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
 	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
@@ -55,7 +54,7 @@ install-git:
 install-python:
 	#ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
 	#ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
-	ln -fs `pwd`/.ipython ${PREFIX}/.ipython
+	ln -fs `pwd`/.ipython ${PREFIX}/
 
 
 install-vcprompt:

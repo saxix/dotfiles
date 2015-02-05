@@ -47,3 +47,7 @@
  * @class customjs
  * @static
  */
+
+if (IPython.CodeCell) {
+  IPython.CodeCell.options_default.cm_config.autoCloseBrackets = false;
+}

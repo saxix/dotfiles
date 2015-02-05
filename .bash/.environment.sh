@@ -1,18 +1,21 @@
 #!/bin/bash
 
-export PATH=/data/jdk/bin:~/bin:$PATH
+export PATH=~/bin:/usr/local/bin:$PATH
 if [ $(uname) == "Darwin" ];then
 	export LC_ALL=en_US.UTF-8
 	export LANG=en_US.UTF-8
-	export PATH=/Library/PostgreSQL/9.3/bin/:$PATH
+	export PATH=/Library/PostgreSQL/9.3/bin:$PATH
+    export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.0.13/lib/pkgconfig/
+else
+    export PATH=/data/jdk/bin:$PATH
 fi
 
 # Django
-export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
-export DJANGO_15='-e /data/VENV/LIB/django/1.5.x'
-export DJANGO_16='-e /data/VENV/LIB/django/1.6.x'
-export DJANGO_17='-e /data/VENV/LIB/django/1.7.x'
-export DJANGO_DEV='-e /data/VENV/LIB/django/trunk'
+#export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
+#export DJANGO_15='-e /data/VENV/LIB/django/1.5.x'
+#export DJANGO_16='-e /data/VENV/LIB/django/1.6.x'
+#export DJANGO_17='-e /data/VENV/LIB/django/1.7.x'
+#export DJANGO_DEV='-e /data/VENV/LIB/django/trunk'
 
 # env
 DJANGO_DIR="/data/VENV/LIB/django/"
@@ -20,9 +23,9 @@ PROJECT_DIR="/data/PROGETTI/saxix/"
 
 
 # Java
-export JAVA_HOME=/data/jdk
-export PYCHARM_JDK=/data/jdk
-export CLASSPATH=$CLASSPATH:/usr/share/java/libreadline-java.jar
+#export JAVA_HOME=/data/jdk
+#export PYCHARM_JDK=/data/jdk
+#export CLASSPATH=$CLASSPATH:/usr/share/java/libreadline-java.jar
 
 # Oracle
 export ORACLE_HOME=/data/oracle/instantclient_11_2
@@ -34,7 +37,7 @@ export VERSIONER_PYTHON_PREFER_32_BIT=Yes
 # python
 export PYTHONDONTWRITEBYTECODE=1
 #unset PYTHONDONTWRITEBYTECODE
-export PYTHONSTARTUP="$HOME/.pythonrc.py"
+#export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHASHSEED=random
 
 
@@ -57,7 +60,7 @@ if [ `id -u` != '0' ]; then
 #        export VIRTUALENV_EXTRA_SEARCH_DIR=/data/pip_cache/raw
 #    fi
 
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+#    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
     export VIRTUALENVWRAPPER_HOOK_DIR=/data/VENV/.hooks
     export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=''
     export VIRTUALENVWRAPPER_VIRTUALENV='virtualenv'
@@ -69,6 +72,6 @@ if [ `id -u` != '0' ]; then
 #    export PIP_USE_MIRRORS=true
 fi
 
-export EDITOR=nano
+export EDITOR=vi
 export SVN_EDITOR=$EDITOR
 export GIT_EDITOR=$SVN_EDITOR

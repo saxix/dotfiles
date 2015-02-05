@@ -13,8 +13,8 @@ set show-all-if-ambiguous on
 
 "\C-x\"": "\"\"C-b"
 
-"(": "\C-v()\e[D"
-"\"": "\C-v\"\C-v\"\e[D"
+#"(": "\C-v()\e[D"
+#"\"": "\C-v\"\C-v\"\e[D"
 
-"[": "\C-v[]\e[D"
+#"[": "\C-v[]\e[D"
 

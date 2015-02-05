@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>net.devpi</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/data/VENV/sax/bin/python</string>
+		<string>/data/VENV/sax/bin/devpi-server</string>
+		<string>--host=0.0.0.0</string>
+		<string>--port=3141</string>
+		<string>--serverdir=/data/pypi_cache</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
