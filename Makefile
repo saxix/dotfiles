@@ -10,11 +10,8 @@ all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 
 install-bash:
 	@echo install-bash
-ifeq ($(shell uname),Darwin)
-	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
-endif
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
-	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
+	ln -fs
 
 	@sh -c "if [ -h ~/.profile ]; then rm ~/.profile; fi"
 	ln -fs ${PREFIX}/.bash/.profile ${PREFIX}/.profile
@@ -26,6 +23,10 @@ endif
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
 	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
+ifeq ($(shell uname),Darwin)
+	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
+	ln -fs ${PREFIX}/.bash/.tmux.conf ${PREFIX}/.tmux.conf
+endif
 
 
 install-git-flow:
@@ -53,8 +54,21 @@ install-git:
 
 install-python:
 	#ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
-	#ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
+	ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
+	ln -fs `pwd`/python/.pydistutils.cfg ${PREFIX}/.pydistutils.cfg
 	ln -fs `pwd`/.ipython ${PREFIX}/
+
+install-odbc:
+ifeq ($(shell uname),Darwin)
+	brew install unixodbc
+	brew install freetds --with-unixodbc
+	ln -fs `pwd`/odbc/.odbc* ${PREFIX}
+	ln -fs `pwd`/odbc/.freetds.conf ${PREFIX}
+	find /usr/local/Cellar/freetds/ -name freetds.conf | xargs -0 -I file ln -fs ~/.freetds.conf file
+	# ; AA=`find /usr/local/Cellar/freetds/ -name freetds.conf` rm -f ${AA} ; ln -fs ~/.freetds.conf ${AA}
+	# ;find /usr/local/Cellar/freetds/ -name freetds.conf | xargs chmod 554
+
+endif
 
 
 install-vcprompt:

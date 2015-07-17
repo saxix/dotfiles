@@ -39,6 +39,7 @@ _ad_completion()
 	cur=`_get_cword`
 
 	DJANGOS=`cd "$DJANGO_DIR"; for f in *.x/django; do echo $f; done | command \sed "s|/django||" | command \sort`
+    DJANGOS="$DJANGOS trunk"
     COMPREPLY=( $( compgen -W '$DJANGOS' -- "$cur" ) )
 }
 complete -o default -F _ad_completion ad

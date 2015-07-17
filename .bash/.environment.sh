@@ -5,7 +5,9 @@ if [ $(uname) == "Darwin" ];then
 	export LC_ALL=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	export PATH=/Library/PostgreSQL/9.3/bin:$PATH
+	export PATH=/usr/local/mysql/bin:$PATH
     export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.0.13/lib/pkgconfig/
+    export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/mysql/lib/
 else
     export PATH=/data/jdk/bin:$PATH
 fi

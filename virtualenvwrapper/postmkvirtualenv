@@ -1,11 +1,11 @@
 #!/bin/bash
 # This hook is run after a new virtualenv is activated.
 
-#if  [[ ${VIRTUAL_ENV} == ${WORKON_HOME}/TEMP__* ]];
-#then
-#    pip install tox
-#    pip install -U pip
-#fi
+if  [[ ${VIRTUAL_ENV} == ${WORKON_HOME}/TEMP__* ]];
+then
+    return
+fi
+
 
 if  [ -f ${WORKON_HOME}/distribute*.* ];
 then
@@ -19,6 +19,5 @@ if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
 fi
 
 if [[ $PWD == *ONU* ]]; then
-	pip install pytest requests
-	pip install git+https://github.com/saxix/cookiecutter.git@work#egg=cookiecutter
+	pip install pytest requests setuptools cookiecutter tox
 fi

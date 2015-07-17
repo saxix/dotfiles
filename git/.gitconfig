@@ -2,8 +2,8 @@
     user = saxix
 
 [user]
-    name = sax
-    email = s.apostolico@gmail.com
+	name = 
+	email = 
 
 [alias]
     st = status
@@ -12,6 +12,7 @@
     co = checkout
     df = diff
     lg = log -p
+    untracked = ls-files --others --exclude-standard
     datetag = !git tag `date \"+%Y%m%d%H%M\"`
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -68,7 +69,7 @@
 [core]
     pager = less -R
     autocrlf = input
-    excludesfile = ~/.gitignore
+	excludesfile = /Users/sax/.gitignore
 
 [branch]
     autosetuprebase = always
@@ -100,3 +101,9 @@
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

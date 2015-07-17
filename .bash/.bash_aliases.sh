@@ -15,6 +15,9 @@ if [ $(uname) == "Linux" ];then
     alias open='xdg-open'
 elif [ $(uname) == "Darwin" ];then
     alias broken='find -L . -type l -ls'
+    alias pg-start='pg_ctl -D /usr/local/var/postgres -r /usr/local/var/postgres/server.log start'
+    alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+
 fi
 
 
@@ -33,7 +36,10 @@ if [ $(uname) == "Darwin" ];then
 else
     alias route='route -n'
 fi
-alias devpi='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server'
+alias devpi-server='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server'
+alias devpi='/data/VENV/sax/bin/devpi'
+alias isort='/data/VENV/sax/bin/isort'
+alias canius='/data/VENV/sax/bin/caniusepython3'
 
 
 # These set up/down to do the history searching
