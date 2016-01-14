@@ -22,9 +22,11 @@ fi
 
 
 alias l='less'
-alias ll='ls -al'
+alias ls='ls -GFh'
+alias ll='ls -alGfh'
 alias df='df -h'
 alias du='du -ch'
+alias cdtemp='cd ~/tmp'
 
 alias la='ls -A'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
@@ -36,7 +38,7 @@ if [ $(uname) == "Darwin" ];then
 else
     alias route='route -n'
 fi
-alias devpi-server='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server'
+alias devpi-server='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server --serverdir=/data/devpi_root'
 alias devpi='/data/VENV/sax/bin/devpi'
 alias isort='/data/VENV/sax/bin/isort'
 alias canius='/data/VENV/sax/bin/caniusepython3'

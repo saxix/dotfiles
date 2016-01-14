@@ -10,8 +10,9 @@ all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 
 install-bash:
 	@echo install-bash
+#	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
-	ln -fs
+	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
 
 	@sh -c "if [ -h ~/.profile ]; then rm ~/.profile; fi"
 	ln -fs ${PREFIX}/.bash/.profile ${PREFIX}/.profile
@@ -23,8 +24,8 @@ install-bash:
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
 	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
+
 ifeq ($(shell uname),Darwin)
-	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
 	ln -fs ${PREFIX}/.bash/.tmux.conf ${PREFIX}/.tmux.conf
 endif
 
@@ -56,7 +57,20 @@ install-python:
 	#ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
 	ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
 	ln -fs `pwd`/python/.pydistutils.cfg ${PREFIX}/.pydistutils.cfg
+	ln -fs `pwd`/python/buildout.cfg ${PREFIX}/.buildout/default.cfg
+	ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
+	ln -fs `pwd`/python/.isort.cfg ${PREFIX}/.isort.cfg
+
 	ln -fs `pwd`/.ipython ${PREFIX}/
+	ln -fs `pwd`/.bash/.pdbrc.py ${PREFIX}/
+	ln -fs `pwd`/.bash/.pdbrc ${PREFIX}/
+	ln -fs `pwd`/.bash/.fancycompleterrc.py ${PREFIX}/
+	ln -fs `pwd`/.bash/.cookiecutterrc ${PREFIX}/
+
+ifeq ($(shell uname),Darwin)
+	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
+endif
+
 
 install-odbc:
 ifeq ($(shell uname),Darwin)
@@ -70,6 +84,10 @@ ifeq ($(shell uname),Darwin)
 
 endif
 
+install-pycharm:
+ifeq ($(shell uname),Darwin)
+	cp .PyCharm/pycharm.vmoptions ~/Library/Preferences/PyCharm45/pycharm.vmoptions
+endif
 
 install-vcprompt:
 	@rm -rf /tmp/vcprompt
@@ -86,4 +104,4 @@ install-virtualenvwrapper: mkdirs
 
 install-sax-virtualenv:
 	virtualenv ${WORKON_HOME}/sax
-	. ${WORKON_HOME}/sax/bin/activate && ${WORKON_HOME}/sax/bin/pip install ipython uwsgi devpi
+	. ${WORKON_HOME}/sax/bin/activate && ${WORKON_HOME}/sax/bin/pip install i§thon uwsgi devpi

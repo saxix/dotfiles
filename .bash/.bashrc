@@ -68,18 +68,23 @@ source ~/.bash/.lib.sh
 source ~/.bash/.environment.sh
 source ~/.bash/.bash_aliases.sh
 source ~/.bash/.git-prompt
-if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
+if [ -e ${PYENV_ROOT}/shims/virtualenvwrapper.sh ];then
+    source /usr/local/bin/virtualenvwrapper.sh
+elif [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-
-source ~/.bash/.git-completion.bash
+source ~/.bash/.bash-completion-git.sh
 source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
 source ~/.bash/.bash-completion-cd.sh
 source ~/.bash/.bash-completion-cookiecutter.sh
 source ~/.bash/.bash-completion-vagrant.sh
+source ~/.bash/.bash-completion-cookiecutter.sh
+source ~/.bash/.bash-completion-tox.sh
+source ~/.pyenv/completions/pyenv.bash
+
 
 
 # enable programmable completion features (you don't need to enable
@@ -91,7 +96,7 @@ elif [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-DISPLAY=:0.0 ; export DISPLAY
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# export PATH="/usr/local/heroku/bin:$PATH"

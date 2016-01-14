@@ -1,0 +1,7 @@
+#!/bin/bash
+pushd ${DJANGO_DIR}/trunk || exit 1
+git reset --hard
+git pull
+/data/VENV/sax/bin/devpi login ${USER}
+/data/VENV/sax/bin/devpi upload
+popd

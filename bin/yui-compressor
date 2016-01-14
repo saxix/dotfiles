@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+
 upsearch () {
   slashes=${PWD//[^\/]/}
   directory="$PWD"
@@ -60,6 +61,7 @@ END
 RESPECT_NO_YUI=true
 ARGS=""
 declare -a IGNORE=('.min.js' '.min.css' 'gulpFile.js' 'test_.*' '*casper*' '.*bundle.*' )
+PROCESSES=-1
 
 while [[ $# > 0 ]]
 do
@@ -67,6 +69,10 @@ key="$1"
 case $key in
     -v|--verbose)
         VERBOSE="$2"
+        shift
+    ;;
+    -p|--processes)
+        PROCESSES=$2
         shift
     ;;
     -h|--help)

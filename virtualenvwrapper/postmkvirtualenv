@@ -6,18 +6,12 @@ then
     return
 fi
 
-
-if  [ -f ${WORKON_HOME}/distribute*.* ];
-then
-    rm ${WORKON_HOME}/distribute*.*
-fi
-pip install -U pip ipython ipdb
-
+pip install -U pip
 
 if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
 	echo $PWD > ${VIRTUAL_ENV}/.project
 fi
 
-if [[ $PWD == *ONU* ]]; then
-	pip install pytest requests setuptools cookiecutter tox
-fi
+#if [[ $PWD == *ONU* ]]; then
+#	pip install pytest requests setuptools cookiecutter tox
+#fi

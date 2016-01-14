@@ -10,8 +10,8 @@ _cookiecutters_completion()
         COMPREPLY=( $( compgen -W '-h --help -V --version -v --verbose --no-input -c --checkout' -- "$cur" ) )
     elif [[ "$cur" == /* || "$cur" == .* ]]; then
         COMPREPLY=( $( compgen -o plusdirs -f -X  -- "$cur" ) )
-    elif [[ -z "$cur" ]] && [[ "$prev" == 'cookiecutter' || "$prev" == -* ]];then
-        APPS=`cd "$CC_DIR"; for f in *; do echo "$f"; done | command \sort`
+    else
+        APPS=`for f in $CC_DIR/*; do echo "$f"; done | command \sort`
         COMPREPLY=( $( compgen -W '$APPS' -- "$cur" ) )
     fi
 

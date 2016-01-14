@@ -2,8 +2,8 @@
     user = saxix
 
 [user]
-	name = 
-	email = 
+	name =
+	email = s.apostolico@gmail.com
 
 [alias]
     st = status
@@ -12,7 +12,10 @@
     co = checkout
     df = diff
     lg = log -p
+    lm = log --format=medium
+    squash= "!f() { if [ "$1" == ""];then echo 'Usage: git squash <number_of_commits>'; exit 1; fi; git rebase -i HEAD~$1;}; f"
     untracked = ls-files --others --exclude-standard
+    ignored = status --ignored
     datetag = !git tag `date \"+%Y%m%d%H%M\"`
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -96,14 +99,41 @@
 
 
 #[diff]
-    #external = /home/sax/bin/git-diff
-[filter "media"]
+#    external = opendiff
+
+[diff "nodiff"]
+    command = /usr/bin/true
+
+# [filter "media"]
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+
+# [difftool "sourcetree"]
+	# cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	# path =
+
+# [mergetool "sourcetree"]
+	# cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	# trustExitCode = true
+
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	smudge = git-lfs smudge %f
+	required = true
+	clean = git-lfs clean %f
+
+[diff]
+	tool = p4merge
+
+[diff "tool.p4merge"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
