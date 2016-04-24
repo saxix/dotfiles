@@ -6,13 +6,16 @@ if [ $(uname) == "Darwin" ];then
 	export LC_ALL=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	# export PATH=/Library/PostgreSQL/9.3/bin:$PATH
-	export PATH=/usr/local/mysql/bin:$PATH
+	export PATH=/usr/local/mysql/bin:/Users/sax/.gem/ruby/2.0.0/bin:/usr/local/sbin:$PATH
     export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.0.13/lib/pkgconfig/
     export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/mysql/lib/
 else
     export PATH=/data/jdk/bin:$PATH
 fi
 DISPLAY=:0.0 ; export DISPLAY
+
+export USER_LOGDIR=${HOME}/logs/
+export USER_TMPDIR=${HOME}/tmp/
 
 # Django
 #export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'

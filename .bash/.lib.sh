@@ -49,6 +49,20 @@ function zapvivrtualenv {
     fi
 }
 
+function cleanvivrtualenv {
+
+    if [ -e $VIRTUAL_ENV ]; then
+        cat src/requirements/install.any.pip | while read line
+        do
+            pkg=`echo $line | awk '{print $1;}'`
+            if [ "$pkg" != "pip" -a "$pkg" != "setuptools" ];then
+                echo "uninstall" $pkg
+                pip uninstall -y -q "$pkg"
+            fi
+        done
+    fi
+}
+
 function clean_project_dir {
     find . -name ".tox" -type d | xargs rm -fr
     find . -name "*.pyc" -type f | xargs rm -fr

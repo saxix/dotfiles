@@ -15,6 +15,7 @@ NIL='\[\033[00m\]'
 UC='\[\e[0;32m\]' # Green
 HD='\[\e[1;34m\]' # Blue
 LC='\[\e[0;37m\]' # White
+YELLOW='\[\e[0;33m' # Yellow
 
 # Prompt function because PROMPT_COMMAND is awesome
 function set_prompt() {
@@ -55,7 +56,7 @@ function set_prompt() {
     # Virtual Env
     if [[ $VIRTUAL_ENV != "" ]]
        then
-           venv=" ${RED}(${VIRTUAL_ENV##*/})${NIL}"
+           venv=" ${YELLOW}(${VIRTUAL_ENV##*/})${NIL}"
     else
        venv=''
     fi
@@ -64,4 +65,3 @@ function set_prompt() {
 }
 
 export PROMPT_COMMAND=set_prompt
-

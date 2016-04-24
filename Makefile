@@ -2,7 +2,7 @@ PREFIX=${HOME}
 DATADIR=/data
 
 mkdirs:
-	source ${PWD}/.bash/.environment.sh && mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${PIP_DOWNLOAD_CACHE}
+	source ${PWD}/.bash/.environment.sh ; mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${USER_LOGDIR} ${USER_TMPDIR}
 
 
 all: mkdirs install-vcprompt install-bash install-bin install-python install-pip install-sax-virtualenv
@@ -10,7 +10,7 @@ all: mkdirs install-vcprompt install-bash install-bin install-python install-pip
 
 install-bash:
 	@echo install-bash
-#	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
+
 	@bash -c "if [ -h ${PREFIX}/.bash ]; then rm ${PREFIX}/.bash; fi"
 	ln -fs `pwd`/.bash/ ${PREFIX}/.bash
 
@@ -39,6 +39,7 @@ install-git-flow:
 
 install-bin:
 	ln -fs `pwd`/bin/* ${PREFIX}/bin
+	ln -fFs `pwd`/supervisord ${PREFIX}/supervisord
 ifeq ($(shell uname),Darwin)
 else
 	rm ${PREFIX}/bin/ssh-copy-id.sh
@@ -104,4 +105,4 @@ install-virtualenvwrapper: mkdirs
 
 install-sax-virtualenv:
 	virtualenv ${WORKON_HOME}/sax
-	. ${WORKON_HOME}/sax/bin/activate && ${WORKON_HOME}/sax/bin/pip install i§thon uwsgi devpi
+	${WORKON_HOME}/sax/bin/pip install -U pip ipython uwsgi devpi supervisor

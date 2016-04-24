@@ -116,6 +116,7 @@ if 'DJANGO_SETTINGS_MODULE' in os.environ:
     except ImportError:
         from django.apps import apps
         get_models = apps.get_models
+        django.setup()
     from django.test.client import Client
     from django.test.utils import setup_test_environment, teardown_test_environment
     from django.conf import settings as S

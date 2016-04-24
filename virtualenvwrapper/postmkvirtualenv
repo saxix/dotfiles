@@ -6,11 +6,11 @@ then
     return
 fi
 
-pip install -U pip
-
-if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
-	echo $PWD > ${VIRTUAL_ENV}/.project
-fi
+#pip install -U pip
+#
+#if [[ ! -e ${VIRTUAL_ENV}/.project ]];then
+#	echo ${PWD} > ${VIRTUAL_ENV}/.project
+#fi
 
 #if [[ $PWD == *ONU* ]]; then
 #	pip install pytest requests setuptools cookiecutter tox

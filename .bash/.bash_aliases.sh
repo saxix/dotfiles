@@ -15,8 +15,8 @@ if [ $(uname) == "Linux" ];then
     alias open='xdg-open'
 elif [ $(uname) == "Darwin" ];then
     alias broken='find -L . -type l -ls'
-    alias pg-start='pg_ctl -D /usr/local/var/postgres -r /usr/local/var/postgres/server.log start'
-    alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+    alias pg-start='/usr/local/Cellar/postgresql/9.5.1/bin/pg_ctl -D /data/postgres -l logfile start'
+    alias pg-stop='/usr/local/Cellar/postgresql/9.5.1/bin/pg_ctl -D /data/postgres -l logfile stop -s -m fast'
 
 fi
 
@@ -40,6 +40,9 @@ else
 fi
 alias devpi-server='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server --serverdir=/data/devpi_root'
 alias devpi='/data/VENV/sax/bin/devpi'
+alias supervisorctl='/data/VENV/sax/bin/supervisorctl'
+alias supervisord='/data/VENV/sax/bin/supervisord'
+
 alias isort='/data/VENV/sax/bin/isort'
 alias canius='/data/VENV/sax/bin/caniusepython3'
 

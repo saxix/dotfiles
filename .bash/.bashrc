@@ -85,8 +85,6 @@ source ~/.bash/.bash-completion-cookiecutter.sh
 source ~/.bash/.bash-completion-tox.sh
 source ~/.pyenv/completions/pyenv.bash
 
-
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -97,6 +95,8 @@ elif [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+/data/VENV/sax/bin/supervisord -c ${HOME}/supervisord/supervisor.ini 2>/dev/null
 
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"

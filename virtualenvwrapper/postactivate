@@ -1,11 +1,8 @@
 #!/bin/bash
 # This hook is run after every virtualenv is activated.
 
-#export PYTHONPATH=${PWD}:${PYTHONPATH}
 export PATH=${PWD}/node_modules/.bin:$PATH
 
 if [ -e $VIRTUAL_ENV/.project ]; then
     cd `cat $VIRTUAL_ENV/.project`
 fi
-
-# export PYTHONPATH=${PWD}/src/:${PYTHONPATH}
