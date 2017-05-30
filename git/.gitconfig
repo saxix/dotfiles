@@ -11,14 +11,10 @@
     br = branch
     co = checkout
     df = diff
-    lg = log -p
-    lm = log --format=medium
     squash= "!f() { if [ "$1" == ""];then echo 'Usage: git squash <number_of_commits>'; exit 1; fi; git rebase -i HEAD~$1;}; f"
     untracked = ls-files --others --exclude-standard
     ignored = status --ignored
     datetag = !git tag `date \"+%Y%m%d%H%M\"`
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
 
 # stash
@@ -42,12 +38,16 @@
     mt = mergetool # fire up the merge tool
 
 # log
+    lg = log -p
+    lm = log --format=medium
     pl = log --pretty=oneline
     l = log --graph --date=short
     changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     changelog = log --pretty=format:\" * %s\"
     shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
 [color]
     ui = auto
@@ -91,15 +91,14 @@
 [merge]
   summary = true
   verbosity = 1
-	tool = diffmerge
+	tool = extMerge
 
+[mergetool "extMerge"]
+  cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  trustExitCode = false
 
 [push]
     default = tracking
-
-
-#[diff]
-#    external = opendiff
 
 [diff "nodiff"]
     command = /usr/bin/true
@@ -126,15 +125,16 @@
 	required = true
 	clean = git-lfs clean %f
 
-[diff]
-	tool = p4merge
-
 [diff "tool.p4merge"]
 	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [credential]
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true

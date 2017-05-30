@@ -1,0 +1,39 @@
+#!/bin/bash
+# killlistener [port...]
+# 
+# kill processes listening on passed ports
+#
+
+FAKE=""
+
+function stop(){
+  PIDS=`lsof -Pn -iTCP:$1 | grep "$1 (LISTEN)" | awk '{print $2}'`
+  if [ -n "$PIDS" ]; then
+    for PID in $PIDS
+    do
+      NAME=`lsof -Pn -iTCP:$1 | grep "$PID " | awk '{print $1}'`
+      if [ -z "$FAKE" ];then
+        kill -9 $PID
+        echo "Killed $NAME pid $PID listening on $1"
+      else
+        echo "Found $NAME pid $PID listening on $1"
+      fi
+    done
+  else
+    echo "no listener found on $1"
+  fi
+}
+
+if [ "$#" == "0" ]; then
+  lsof -Pn -iTCP | grep LISTEN
+  exit 1
+fi
+
+while (( "$#" )); do
+  if [[ "$1" == "-f" ]]; then
+    FAKE=1
+  else
+    stop $1
+  fi
+  shift
+done

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+DIR=/data/VENV/LIB/django/
+
+VERSION=$1
+if [ -z "$VERSION" ];then
+  exit 1
+fi
+
+function finish {
+  # Your cleanup code here
+  echo "cleanup"
+}
+trap finish EXIT
+
+
+
+wget https://www.djangoproject.com/download/${VERSION}/tarball/ -O ${DIR}/${VERSION}.tgz || exit 1
+tar -xzf ${DIR}/${VERSION}.tgz -C ${DIR} || exit 1
+rm -f ${DIR}/${VERSION}.tgz || exit 1
+
+IFS=. read -a arr <<< "${VERSION}"
+ln -svhfF Django-${VERSION}  "${DIR}/${arr[0]}.${arr[1]}.x"
+
+ls -l ${DIR}
