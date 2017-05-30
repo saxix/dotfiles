@@ -1,0 +1,16 @@
+{
+  "registration": 54517, 
+  "mux": 54521, 
+  "location": "10.65.27.140", 
+  "signature_scheme": "hmac-sha256", 
+  "ssh": "", 
+  "pack": "json", 
+  "interface": "tcp://127.0.0.1", 
+  "key": "d1e031c4-88ca-449e-86a5-12e4c3d3508d", 
+  "control": 54519, 
+  "notification": 54529, 
+  "task_scheme": "leastload", 
+  "task": 54525, 
+  "iopub": 54527, 
+  "unpack": "json"
+}

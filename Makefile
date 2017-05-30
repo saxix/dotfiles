@@ -23,18 +23,18 @@ install-bash:
 	ln -fs `pwd`/_bash/ ${PREFIX}/.bash
 
 	@sh -c "if [ -h ~/.profile ]; then rm ~/.profile; fi"
-	ln -fs ${PREFIX}/_bash/.profile ${PREFIX}/.profile
+	ln -fs ${PREFIX}/.bash/.profile ${PREFIX}/.profile
 
 	@bash -c "if [ -h ${PREFIX}/.bashrc ]; then rm ${PREFIX}/.bashrc; fi"
-	ln -fs ${PREFIX}/_bash/.bashrc ${PREFIX}/.bashrc
+	ln -fs ${PREFIX}/.bash/.bashrc ${PREFIX}/.bashrc
 
 	@bash -c "if [ -h ${PREFIX}/.inputrc ]; then rm ${PREFIX}/.inputrc; fi"
-	ln -fs ${PREFIX}/_bash/.inputrc ${PREFIX}/.inputrc
+	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
-	ln -fs ${PREFIX}/_bash/.ansible.cfg ${PREFIX}/.ansible.cfg
+	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
 
 ifeq ($(shell uname),Darwin)
-	ln -fs ${PREFIX}/_bash/.tmux.conf ${PREFIX}/.tmux.conf
+	ln -fs ${PREFIX}/.bash/.tmux.conf ${PREFIX}/.tmux.conf
 endif
 
 
@@ -74,10 +74,10 @@ install-python:
 	ln -fs `pwd`/python/.isort.cfg ${PREFIX}/.isort.cfg
 
 	ln -fs `pwd`/_ipython ${PREFIX}/.ipython
-	ln -fs `pwd`/_bash/.pdbrc.py ${PREFIX}/
-	ln -fs `pwd`/_bash/.pdbrc ${PREFIX}/
-	ln -fs `pwd`/_bash/.fancycompleterrc.py ${PREFIX}/
-	ln -fs `pwd`/_bash/.cookiecutterrc ${PREFIX}/
+	ln -fs ${PREFIX}/.bash/.pdbrc.py ${PREFIX}/
+	ln -fs ${PREFIX}/.bash/.pdbrc ${PREFIX}/
+	ln -fs ${PREFIX}/.bash/.fancycompleterrc.py ${PREFIX}/
+	ln -fs ${PREFIX}/.bash/.cookiecutterrc ${PREFIX}/
 ifeq ($(shell uname),Darwin)
 	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
 	brew install pyenv
