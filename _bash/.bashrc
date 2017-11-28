@@ -96,6 +96,7 @@ source ~/.bash/.bash-completion-docker.sh
 source ~/.bash/.bash-completion-docker-composer.sh
 source ~/.bash/.bash-completion-makefile.sh
 source ~/.bash/.bash-completion-tox.sh
+[[ -f "/usr/local/etc/bash_completion.d/password-store" ]] && source /usr/local/etc/bash_completion.d/password-store
 #source ~/.pyenv/completions/pyenv.bash
 
 # /data/VENV/sax/bin/supervisord -c ${HOME}/supervisord/supervisor.ini 2>/dev/null
@@ -110,4 +111,4 @@ source ~/.bash/.bash-completion-tox.sh
 #eval "$(docker-machine env default)"
 
 # added by travis gem
-[ -f /Users/sax/.travis/travis.sh ] && source /Users/sax/.travis/travis.sh
+#[ -f /Users/sax/.travis/travis.sh ] && source /Users/sax/.travis/travis.sh

@@ -3,7 +3,12 @@ DATADIR=/data
 UNAME_S := $(shell uname -s)
 
 mkdirs:
-	source ${PWD}/_bash/.environment.sh ; mkdir -p ${WORKON_HOME} ${PROJECT_HOME} ${VIRTUALENVWRAPPER_HOOK_DIR} ${USER_LOGDIR} ${USER_TMPDIR}
+	source ${PWD}/_bash/.environment.sh ; mkdir -p ${WORKON_HOME} \
+			${PROJECT_HOME} \
+			${VIRTUALENVWRAPPER_HOOK_DIR} \
+			${USER_LOGDIR} \
+			${USER_TMPDIR} \
+			${DEVPI_ROOT}
 
 
 all: mkdirs install-bash install-bin install-brew install-python install-pip install-sax-virtualenv

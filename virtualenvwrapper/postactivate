@@ -1,8 +1,12 @@
 #!/bin/bash
 # This hook is run after every virtualenv is activated.
 
-export PATH=${PWD}/node_modules/.bin:$PATH
-
 if [ -e $VIRTUAL_ENV/.project ]; then
     cd `cat $VIRTUAL_ENV/.project`
+fi
+
+export PATH=${PWD}/node_modules/.bin:$PATH
+
+if [ -e ${PWD}/.virtualenv_hooks/postactivate ]; then
+    . ${PWD}/.virtualenv_hooks/postactivate
 fi

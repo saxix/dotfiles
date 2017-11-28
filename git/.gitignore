@@ -1,9 +1,12 @@
 .*.sw?
 .swp
+.cache
 *~
 ~*
 .bash/private.sh
 .idea
+.tox
+htmlcov
 *.pyc
 *.pyo
 .credentials

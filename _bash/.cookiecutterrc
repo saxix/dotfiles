@@ -10,4 +10,3 @@ abbreviations:
     pp: https://github.com/audreyr/cookiecutter-pypackage.git
     gh: https://github.com/{0}.git
     bb: https://bitbucket.org/{0}
-    wfp: ssh://git@codeassist.wfp.org:7999/cook/{0}.git

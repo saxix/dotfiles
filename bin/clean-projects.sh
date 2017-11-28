@@ -1,10 +1,10 @@
 #!/bin/bash
 TARGET=/data/PROGETTI
 
-df -h ${TARGET}
-#sudo find ${TARGET}/ -name *.pyc -o -name '~build' -exec du -d0 -h "{}" \;
-find ${TARGET}/ -name *.pyc -o -name '~build' -o -name '.cache' | xargs rm -fr
+du -sh ${TARGET}
+find ${TARGET}/ -name '~build' -o -name '.cache' -o -name '.tox' -o -name '__pycache__' | xargs rm -fr
+find ${TARGET}/ -name *.pyc | xargs rm -fr
+
+find ${TARGET}/ONU_WorldFoodProgramme -name 'node_modules' -o -name 'dist' | xargs rm -fr
+du -sh ${TARGET}
 find ${WORKON_HOME}/ -name *.pyc | xargs rm -f
-
-
-df -h ${TARGET}

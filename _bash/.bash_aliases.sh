@@ -15,8 +15,8 @@ if [ $(uname) == "Linux" ];then
     alias open='xdg-open'
 elif [ $(uname) == "Darwin" ];then
     alias broken='find -L . -type l -ls'
-    alias pg-start='/usr/local/Cellar/postgresql/9.5.4/bin/pg_ctl -D /usr/local/var/postgres -l logfile start'
-    alias pg-stop='/usr/local/Cellar/postgresql/9.5.4/bin/pg_ctl -D /usr/local/var/postgres -l logfile stop -s -m fast'
+    alias pg-start='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile start'
+    alias pg-stop='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile stop -s -m fast'
 
 fi
 
@@ -27,24 +27,23 @@ alias ll='ls -alGfh'
 alias df='df -h'
 alias du='du -ch'
 alias cdtemp='cd ~/tmp'
-
+alias myip="curl http://checkip.amazonaws.com/"
 alias la='ls -A'
 alias pycclean='find . -name "*.pyc" | xargs -I {} rm -v "{}"'
 alias env='env|sort'
 alias rm='rm -i'
+
+alias h1='HISTTIMEFORMAT="%F %T  " history 10'
+alias h2='HISTTIMEFORMAT="%F %T  " history 20'
+alias h3='HISTTIMEFORMAT="%F %T  " history 30'
 
 if [ $(uname) == "Darwin" ];then
     alias route='netstat -rn'
 else
     alias route='route -n'
 fi
-alias devpi-server='/data/VENV/sax/bin/python /data/VENV/sax/bin/devpi-server --serverdir=/data/devpi_root'
-alias devpi='/data/VENV/sax/bin/devpi'
-alias svctl='/data/VENV/sax/bin/supervisorctl -c $HOME/supervisord/supervisor.ini'
-alias svd='/data/VENV/sax/bin/supervisord -c $HOME/supervisord/supervisor.ini'
 
-alias isort='/data/VENV/sax/bin/isort'
-alias canius='/data/VENV/sax/bin/caniusepython3'
+alias isort="${HOST_VENV}/bin/isort"
 
 
 # These set up/down to do the history searching

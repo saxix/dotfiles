@@ -9,11 +9,18 @@ if [ $(uname) == "Darwin" ];then
 	  export PATH=/usr/local/mysql/bin:/Users/sax/.gem/ruby/2.0.0/bin:/usr/local/sbin:$PATH
     export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.0.13/lib/pkgconfig/
     export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/Cellar/mysql/5.7.13/lib/
+
+		# Android SDK
+		export PATH=$PATH:/Users/sax/Library/Android/sdk/tools/bin/
+
+		# GDAL
+		export PATH=$PATH:/Library/Frameworks/GDAL.framework/Versions/2.1/Programs/
 else
     export PATH=/data/jdk/bin:$PATH
 fi
 DISPLAY=:0.0 ; export DISPLAY
 
+export HOST_VENV=/data/VENV/sax/
 export USER_LOGDIR=${HOME}/logs/
 export USER_TMPDIR=${HOME}/tmp/
 
@@ -22,12 +29,16 @@ LDFLAGS="$LDFLAGS -L/usr/local/opt/expat/lib"
 CPPFLAGS="$CPPFLAGS -I/usr/local/opt/expat/include"
 
 # openssl
-LDFLAGS="$LDFLAGS -L$(brew --prefix openssl)/lib"
-CFLAGS="$CFLAGS -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+if [ $(uname) == "Darwin" ];then
+	LDFLAGS="$LDFLAGS -L$(brew --prefix openssl)/lib"
+	CFLAGS="$CFLAGS -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+fi
 
 # readline
-LDFLAGS="$LDFLAGS -L$(brew --prefix readline)/lib"
-CFLAGS="$CFLAGS -I$(brew --prefix readline)/"
+if [ $(uname) == "Darwin" ];then
+	LDFLAGS="$LDFLAGS -L$(brew --prefix readline)/lib"
+	CFLAGS="$CFLAGS -I$(brew --prefix readline)/"
+fi
 
 # Django
 #export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
@@ -99,7 +110,7 @@ fi
 export EDITOR=vi
 export SVN_EDITOR=$EDITOR
 export GIT_EDITOR=$SVN_EDITOR
-
+export DEVPI_ROOT=/data/devpi/root
 
 # terminal
 # a black
