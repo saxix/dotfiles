@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  devpi:
+    image: saxix/devpi:2.0
+    container_name: devpi
+    volumes:
+      - /data/storage/devpi/index:/mnt
+      - /data/storage/devpi/BACKUP:/export
+    ports:
+      - "3141:3141"
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - /data/storage/mysql:/var/lib/mysql
+
+  postgres:
+    image: mdillon/postgis
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD:
+      POSTGRES_USER: postgres
+    volumes:
+      - /data/storage/pgdata:/var/lib/postgresql/data
+
+  sentry:
+    image: saxix/sentry-localdev
+    container_name: sentry
+    environment:
+      - SENTRY_SECRET_KEY=abc
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_DB_NAME=sentry
+      - SENTRY_POSTGRES_HOST=postgres
+      - SENTRY_ADMIN_USERNAME=sax
+      - SENTRY_ADMIN_PASSWORD=123
+      - C_FORCE_ROOT=1 # never in production
+    links:
+      - "redis:redis"
+      - "postgres:postgres"
+    ports:
+      - 9000:9000
+    volumes:
+      - /data/storage/sentry:/conf
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.0
+    container_name: elasticsearch
+    volumes:
+      - /data/storage/esdata:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+
+  rabbitmq:
+    image: rabbitmq:3.6-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=sax
+      - RABBITMQ_DEFAULT_PASS=123
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    hostname: rabbit
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200

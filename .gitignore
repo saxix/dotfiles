@@ -1,6 +1,5 @@
 ._
 .*.sw?
-.bash/.pypirc
 .bash/private.sh
 .DS_Store
 .idea

@@ -1,0 +1,16 @@
+check-manifest
+cookiecutter
+devpi
+devpi-client
+devpi-common
+devpi-server
+devpi-web
+docker
+docutils
+flake8
+isort
+pdbpp
+pip
+pip-tools
+pyflakes
+supervisor
