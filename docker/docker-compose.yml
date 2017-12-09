@@ -9,7 +9,7 @@ services:
       - /data/storage/devpi/BACKUP:/export
     ports:
       - "3141:3141"
-    restart: always
+    restart: unless-stopped
 
   redis:
     image: redis:alpine
@@ -18,7 +18,7 @@ services:
       - "6379:6379"
 
   mysql:
-    image: mysql:8
+    image: mysql:5.7
     container_name: mysql
     ports:
       - "3306:3306"
@@ -26,7 +26,8 @@ services:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - /data/storage/mysql:/var/lib/mysql
+      - /data/storage/mysql5:/var/lib/mysql
+    restart: unless-stopped
 
   postgres:
     image: mdillon/postgis
@@ -38,6 +39,7 @@ services:
       POSTGRES_USER: postgres
     volumes:
       - /data/storage/pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
   sentry:
     image: saxix/sentry-localdev
@@ -57,6 +59,7 @@ services:
       - 9000:9000
     volumes:
       - /data/storage/sentry:/conf
+    restart: unless-stopped
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.0.0
@@ -73,18 +76,60 @@ services:
         hard: -1
     ports:
       - 9200:9200
+    restart: unless-stopped
 
   rabbitmq:
     image: rabbitmq:3.6-management
     container_name: rabbitmq
+    hostname: rabbit
     environment:
       - RABBITMQ_DEFAULT_USER=sax
       - RABBITMQ_DEFAULT_PASS=123
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    hostname: rabbit
+    volumes:
+      - /data/storage/rabbitmq:/var/lib/rabbitmq
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
       - 9200:9200
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:3
+    container_name: mongo
+    hostname: mongo
+    volumes:
+      - /data/storage/mongo/data:/data/db
+      - /data/storage/mongo/config:/data/configdb
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+
+  buildbot:
+    image: buildbot/buildbot-master:latest
+    container_name: mongo
+    hostname: buildbot
+    environment:
+      - BUILDBOT_CONFIG_DIR=/config
+    volumes:
+      - /data/storage/buildbot/config:/config
+    ports:
+      - 9989:9989
+    restart: unless-stopped
+
+  buildbot-worker:
+    image: buildbot/buildbot-worker:latest
+    container_name: buildbot-worker
+    hostname: buildbot-worker
+    environment:
+      - BUILDMASTER=buildbot
+      - BUILDMASTER_PORT=9989
+      - WORKERNAME=worker_1
+      - WORKERPASS=123
+      - WORKER_ENVIRONMENT_BLACKLIST=WORKERPASS
+    volumes:
+      - /data/storage/mongo/data:/data/db
+      - /data/storage/mongo/config:/data/configdb
+    restart: unless-stopped

@@ -1,6 +1,8 @@
 #!/bin/bash
 . ~/.bash/.bash_aliases.sh || exit 1
 LIBS='capi-django-loader
+django-temporary-permissions
+pytest-yasew
 wfp-andy
 wfp-activedirectory
 wfp-auth
@@ -10,6 +12,7 @@ wfp-django-comet
 wfp-django-crashlog
 wfp-django-ldap
 wfp-django-temp-perms
+wfp-django-timezone-field
 wfp-djangosecurity
 wfp-djangolib
 wfp-geo
@@ -20,10 +23,12 @@ wfp-workflow
 
 TARGET=/data/WFP/
 
-devpi login sax
+devpi login sax >/dev/null
+devpi use sax/dev >/dev/null
 
 IFS=$'\n'
 for app in $LIBS; do
+    echo $app
 	pip download $app --no-binary all --no-deps -d $TARGET --index http://pypi.wfp.org/simple || exit 1
 done
 IFS=$' '
@@ -36,5 +41,5 @@ pip download "wfp-workflow==0.14" --no-deps -d $TARGET --index http://pypi.wfp.o
 #pip download "wfp-django-crashlog==1.7" --no-deps -d $TARGET --index http://pypi.wfp.org/simple || exit 1
 
 
-devpi upload --from-dir ${TARGET}
+devpi upload --index sax/wfp --from-dir ${TARGET}
 #rm -fr ${TARGET}

@@ -11,11 +11,10 @@ pdbpp
 pip
 pip-tools
 pyflakes
-supervisor
 sphinx
 awscli
 boto3
 psycopg2
 mysqlclient
 pillow
-sphinx
+
