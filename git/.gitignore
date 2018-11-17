@@ -10,3 +10,7 @@ htmlcov
 *.pyc
 *.pyo
 .credentials
+.env
+.demo
+.venv
+.pytest_cache

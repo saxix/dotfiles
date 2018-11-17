@@ -2,8 +2,8 @@ version: '3'
 
 services:
   devpi:
-    image: saxix/devpi:2.0
-    container_name: devpi
+    image: saxix/devpi:2.2
+    container_name: gundam-devpi
     volumes:
       - /data/storage/devpi/index:/mnt
       - /data/storage/devpi/BACKUP:/export
@@ -11,15 +11,29 @@ services:
       - "3141:3141"
     restart: unless-stopped
 
+  rancher:
+    image: rancher/rancher
+    container_name: gundam-rancher
+    volumes:
+      - /data/storage/rancher/data:/data
+      - /data/storage/rancher/rancher:/var/lib/rancher
+      - /data/storage/rancher/auditlog:/var/log/auditlog
+    ports:
+      - "10000:80"
+      - "10443:443"
+    restart: unless-stopped
+
+
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: gundam-redis
     ports:
       - "6379:6379"
+    restart: unless-stopped
 
   mysql:
     image: mysql:5.7
-    container_name: mysql
+    container_name: gundam-mysql
     ports:
       - "3306:3306"
     environment:
@@ -31,7 +45,7 @@ services:
 
   postgres:
     image: mdillon/postgis
-    container_name: postgres
+    container_name: gundam-postgres
     ports:
       - "5432:5432"
     environment:
@@ -41,9 +55,22 @@ services:
       - /data/storage/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
 
+  pgadmin:
+    image: dpage/pgadmin4:3.5
+    container_name: gundam-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sax
+      PGADMIN_DEFAULT_PASSWORD: 123
+      PGADMIN_LISTEN_PORT: 8000
+    ports:
+      - 8888:8000
+    volumes:
+      - /data/storage/pgadmin:/var/lib/pgadmin
+    restart: unless-stopped
+
   sentry:
     image: saxix/sentry-localdev
-    container_name: sentry
+    container_name: gundam-sentry
     environment:
       - SENTRY_SECRET_KEY=abc
       - SENTRY_REDIS_HOST=redis
@@ -60,10 +87,21 @@ services:
     volumes:
       - /data/storage/sentry:/conf
     restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+
+  registry:
+    image: registry:2
+    container_name: gundam-registry
+    ports:
+      - 5000:5000
+    volumes:
+      - /data/storage/registry:/var/lib/registry
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.0.0
-    container_name: elasticsearch
+    container_name: gundam-elasticsearch
     volumes:
       - /data/storage/esdata:/usr/share/elasticsearch/data
     environment:
@@ -80,7 +118,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.6-management
-    container_name: rabbitmq
+    container_name: gundam-rabbitmq
     hostname: rabbit
     environment:
       - RABBITMQ_DEFAULT_USER=sax
@@ -93,12 +131,34 @@ services:
         soft: -1
         hard: -1
     ports:
-      - 9200:9200
+      - 5673:5673
+    restart: unless-stopped
+
+  sns:
+    image: s12v/sns:latest
+    container_name: gundam-sns
+
+  kafka:
+    image: spotify/kafka:latest
+    container_name: gundam-kafka
+    hostname: rabbit
+    environment:
+      - ADVERTISED_HOST=sax
+      - ADVERTISED_PORT=9092
+      - CONSUMER_THREADS=1
+      - TOPICS=topic1,topic2
+      - ZK_CONNECT=kafka7zookeeper:2181/root/path
+      - GROUP_ID=mymirror
+    volumes:
+      - /data/storage/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 2181:2181
+      - 9092:9092
     restart: unless-stopped
 
   mongo:
     image: mongo:3
-    container_name: mongo
+    container_name: gundam-mongo
     hostname: mongo
     volumes:
       - /data/storage/mongo/data:/data/db
@@ -107,29 +167,29 @@ services:
       - 27017:27017
     restart: unless-stopped
 
-  buildbot:
-    image: buildbot/buildbot-master:latest
-    container_name: mongo
-    hostname: buildbot
-    environment:
-      - BUILDBOT_CONFIG_DIR=/config
-    volumes:
-      - /data/storage/buildbot/config:/config
-    ports:
-      - 9989:9989
-    restart: unless-stopped
-
-  buildbot-worker:
-    image: buildbot/buildbot-worker:latest
-    container_name: buildbot-worker
-    hostname: buildbot-worker
-    environment:
-      - BUILDMASTER=buildbot
-      - BUILDMASTER_PORT=9989
-      - WORKERNAME=worker_1
-      - WORKERPASS=123
-      - WORKER_ENVIRONMENT_BLACKLIST=WORKERPASS
-    volumes:
-      - /data/storage/mongo/data:/data/db
-      - /data/storage/mongo/config:/data/configdb
-    restart: unless-stopped
+#  buildbot:
+#    image: buildbot/buildbot-master:latest
+#    container_name: mongo
+#    hostname: buildbot
+#    environment:
+#      - BUILDBOT_CONFIG_DIR=/config
+#    volumes:
+#      - /data/storage/buildbot/config:/config
+#    ports:
+#      - 9989:9989
+#    restart: unless-stopped
+#
+#  buildbot-worker:
+#    image: buildbot/buildbot-worker:latest
+#    container_name: buildbot-worker
+#    hostname: buildbot-worker
+#    environment:
+#      - BUILDMASTER=buildbot
+#      - BUILDMASTER_PORT=9989
+#      - WORKERNAME=worker_1
+#      - WORKERPASS=123
+#      - WORKER_ENVIRONMENT_BLACKLIST=WORKERPASS
+#    volumes:
+#      - /data/storage/mongo/data:/data/db
+#      - /data/storage/mongo/config:/data/configdb
+#    restart: unless-stopped

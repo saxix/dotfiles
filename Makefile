@@ -1,4 +1,4 @@
-PREFIX=${HOME}
+PREFIX?=${HOME}
 DATADIR=/data
 UNAME_S := $(shell uname -s)
 
@@ -7,18 +7,24 @@ mkdirs:
 			${PROJECT_HOME} \
 			${VIRTUALENVWRAPPER_HOOK_DIR} \
 			${USER_LOGDIR} \
-			${USER_TMPDIR} \
-			${DEVPI_ROOT}
+			${USER_TMPDIR} 
 
 
-all: mkdirs install-bash install-bin install-brew install-python install-pip install-sax-virtualenv
+all: mkdirs install-bash \
+			install-bin \
+			install-brew \
+			install-docker \
+			install-pip \
+			install-python \
+			python-venv \
+
 
 install-brew:
 	@echo install-brew
 	ruby -e `curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install`
 	brew update
 	brew upgrade
-	brew install expat pyenv postgresql git-flow
+	brew install expat pyenv git-flow bash-completion
 
 
 install-bash:
@@ -36,30 +42,24 @@ install-bash:
 	@bash -c "if [ -h ${PREFIX}/.inputrc ]; then rm ${PREFIX}/.inputrc; fi"
 	ln -fs ${PREFIX}/.bash/.inputrc ${PREFIX}/.inputrc
 
-	ln -fs ${PREFIX}/.bash/.ansible.cfg ${PREFIX}/.ansible.cfg
 
 ifeq ($(shell uname),Darwin)
 	ln -fs ${PREFIX}/.bash/.tmux.conf ${PREFIX}/.tmux.conf
+	ln -fs `pwd`/osx/LaunchAgents/* ${PREFIX}/Library/LaunchAgents/
 endif
 
-
-install-git-flow:
-	curl -O https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh
-	chmod u+x gitflow-installer.sh
-	INSTALL_PREFIX=~/bin ./gitflow-installer.sh
-	rm -f gitflow-installer.sh
-
+install-docker:
+	if [ ! -d  /Applications/Docker.app ]; then \
+		[ -e Docker.dmg ] || wget https://download.docker.com/mac/stable/Docker.dmg; \
+		sudo hdiutil attach Docker.dmg; \
+		sudo cp -R /Volumes/Docker/Docker.app /Applications; \
+		sudo hdiutil detach /Volumes/Docker; \
+	fi
+	docker &
+	cd docker && docker-compose start devpi
 
 install-bin:
 	ln -fs `pwd`/bin/* ${PREFIX}/bin
-ifeq ($(shell uname),Darwin)
-else
-	rm ${PREFIX}/bin/ssh-copy-id.sh
-endif
-
-install-dev:
-	ln -fFs `pwd`/supervisord ${PREFIX}/
-	ln -fFs `pwd`/.sentry ${PREFIX}/
 
 
 install-pip:
@@ -71,22 +71,33 @@ install-git:
 	ln -fs `pwd`/git/.gitconfig ${PREFIX}/.gitconfig
 	ln -fs `pwd`/git/.gitignore ${PREFIX}/.gitignore
 
+
 install-python:
-	#ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
+	ln -fs `pwd`/python/.pypirc ${PREFIX}/.pypirc
 	ln -fs `pwd`/python/.pdbrc.py ${PREFIX}/.pdbrc.py
+	ln -fs `pwd`/python/.pdbrc ${PREFIX}/.pdbrc
 	ln -fs `pwd`/python/.pydistutils.cfg ${PREFIX}/.pydistutils.cfg
 	ln -fs `pwd`/python/.pythonrc.py ${PREFIX}/.pythonrc.py
 	ln -fs `pwd`/python/.isort.cfg ${PREFIX}/.isort.cfg
+	ln -fs `pwd`/python/.cookiecutterrc ${PREFIX}/
+	ln -fs `pwd`/python/.fancycompleterrc.py ${PREFIX}/
 
 	ln -fs `pwd`/_ipython ${PREFIX}/.ipython
-	ln -fs ${PREFIX}/.bash/.pdbrc.py ${PREFIX}/
-	ln -fs ${PREFIX}/.bash/.pdbrc ${PREFIX}/
-	ln -fs ${PREFIX}/.bash/.fancycompleterrc.py ${PREFIX}/
-	ln -fs ${PREFIX}/.bash/.cookiecutterrc ${PREFIX}/
+#	PIPSI
+	curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
+	pipsi install cookiecutter tox twine pre-commit pipenv
+
 ifeq ($(shell uname),Darwin)
-	ln -fs `pwd`/Library/LaunchAgents/* ${PREFIX}/Library/LaunchAgents
-	brew install pyenv
+#	brew install readline pyenv
+#	-xcode-select --install
 endif
+	pyenv install 2.7.14
+	pyenv install 3.3.7
+	pyenv install 3.4.7
+	pyenv install 3.5.4
+	pyenv install 3.6.4
+	pyenv install pypy2.7-5.9.0
+	pyenv global 2.7.14 3.3.7 3.4.7 3.5.4 3.6.4 pypy2.7-5.9.0
 
 
 install-odbc:
@@ -98,13 +109,8 @@ ifeq ($(shell uname),Darwin)
 	find /usr/local/Cellar/freetds/ -name freetds.conf | xargs -0 -I file ln -fs ~/.freetds.conf file
 	# ; AA=`find /usr/local/Cellar/freetds/ -name freetds.conf` rm -f ${AA} ; ln -fs ~/.freetds.conf ${AA}
 	# ;find /usr/local/Cellar/freetds/ -name freetds.conf | xargs chmod 554
-
 endif
 
-install-pycharm:
-ifeq ($(shell uname),Darwin)
-	cp _PyCharm/pycharm.vmoptions ~/Library/Preferences/PyCharm45/pycharm.vmoptions
-endif
 
 install-vcprompt:
 	@rm -rf /tmp/vcprompt
@@ -115,10 +121,6 @@ install-vcprompt:
 	@rm -rf /tmp/vcprompt
 
 
-install-virtualenvwrapper: mkdirs
-	mkdir -p ${VIRTUALENVWRAPPER_HOOK_DIR}
-	ln -fs `pwd`/virtualenvwrapper/* ${VIRTUALENVWRAPPER_HOOK_DIR}/
-
-install-sax-virtualenv:
-	virtualenv ${WORKON_HOME}/sax
-	${WORKON_HOME}/sax/bin/pip install -U pip cookiecutter check-manifest ipython devpi supervisor flake8 isort pdbpp pep8 flake8-quotes
+test:
+	mkdir -p ~build
+	PREFIX=${PWD}/~build $(MAKE) install-bash

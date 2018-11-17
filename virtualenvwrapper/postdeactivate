@@ -1,7 +1,0 @@
-#!/bin/bash
-# This hook is run after every virtualenv is deactivated.
-
-if  [[ $2 == TEMP__* ]];
-then
-    rmvirtualenv $2
-fi

@@ -34,7 +34,7 @@ c = get_config()
 # c.InteractiveShellApp.exec_PYTHONSTARTUP = True
 
 # A list of dotted module names of IPython extensions to load.
-c.InteractiveShellApp.extensions = ['autoreload']
+# c.InteractiveShellApp.extensions = ['autoreload']
 
 # Run the module as a script.
 # c.InteractiveShellApp.module_to_run = ''
@@ -190,7 +190,7 @@ c.InteractiveShellApp.extensions = ['autoreload']
 # it is not applied if there are no more arguments on the line, and '2' for
 # 'full' autocall, where all callable objects are automatically called (even if
 # no arguments are present).
-c.TerminalInteractiveShell.autocall = 1
+# c.TerminalInteractiveShell.autocall = 1
 
 # The part of the banner to be printed before the profile
 # c.TerminalInteractiveShell.banner1 = 'Python 2.7.5+ (default, Feb 27 2014, 19:37:08) \nType "copyright", "credits" or "license" for more information.\n\nIPython 2.1.0 -- An enhanced Interactive Python.\n?         -> Introduction and overview of IPython\'s features.\n%quickref -> Quick reference.\nhelp      -> Python\'s own help system.\nobject?   -> Details about \'object\', use \'object??\' for extra details.\n'
@@ -210,7 +210,7 @@ c.TerminalInteractiveShell.autocall = 1
 # c.TerminalInteractiveShell.automagic = True
 
 # Show rewritten input, e.g. for autocall.
-c.TerminalInteractiveShell.show_rewritten_input = True
+# c.TerminalInteractiveShell.show_rewritten_input = True
 
 # auto editing of files with syntax errors.
 # c.TerminalInteractiveShell.autoedit_syntax = False
@@ -532,10 +532,10 @@ c.TerminalInteractiveShell.show_rewritten_input = True
 # c.StoreMagics.autorestore = False
 
 
-c.InteractiveShellApp.exec_lines = []
-c.InteractiveShellApp.exec_lines.append('%load_ext autoreload')
-c.InteractiveShellApp.exec_lines.append('%autoreload 2')
+# c.InteractiveShellApp.exec_lines = []
+# c.InteractiveShellApp.exec_lines.append('%load_ext autoreload')
+# c.InteractiveShellApp.exec_lines.append('%autoreload 2')
 # c.InteractiveShellApp.exec_PYTHONSTARTUP = False
-c.InteractiveShellApp.exec_lines.append('print("Warning: disable autoreload in ipython_config.py to improve performance.")')
+# c.InteractiveShellApp.exec_lines.append('print("Warning: disable autoreload in ipython_config.py to improve performance.")')
 
 MEDIA_CHOICES = (    ('Audio', (('vinyl', 'Vinyl'),('cd', 'CD'),)),('Video', (('vhs', 'VHS Tape'),('dvd', 'DVD'),)),('unknown', 'Unknown'),)

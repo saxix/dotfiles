@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 [[ -s /home/sax/.nvm/nvm.sh ]] && . /home/sax/.nvm/nvm.sh # This loads NVM
 
 # If not running interactively, don't do anything
@@ -56,16 +57,17 @@ xterm*|rxvt*)
     ;;
 esac
 
+
+source $HOME/.bash/.lib.sh
+source $HOME/.bash/.environment.sh
+source $HOME/.bash/.bash_aliases.sh
+source $HOME/.bash/.git-prompt
+
 if [ $(uname) == "Darwin" ];then
-    source $(brew --prefix)/etc/bash_completion
+    #source $(brew --prefix)/etc/bash_completion
+    source $BREW_PREFIX/etc/bash_completion
     source /sw/bin/init.sh
 fi
-
-source ~/.bash/.lib.sh
-source ~/.bash/.environment.sh
-source ~/.bash/.bash_aliases.sh
-source ~/.bash/.git-prompt
-
 
 if which pyenv > /dev/null; then
   eval "$(pyenv init -)";
@@ -76,30 +78,34 @@ fi
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
-elif [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+#elif [ -f $(brew --prefix)/etc/bash_completion ]; then
+#  . $(brew --prefix)/etc/bash_completion
 fi
 
 if [ -e /usr/local/bin/virtualenvwrapper.sh ];then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
-
+#eval "$(_BITCASTER_COMPLETE=source bitcaster)"
 source ~/.bash/.bash-completion-git.sh
 #source ~/.bash/.bash-completion-fabric.sh
 source ~/.bash/.bash-completion-django.sh
 source ~/.bash/.bash-completion-gitflow.sh
 source ~/.bash/.bash-completion-cd.sh
-source ~/.bash/.bash-completion-cookiecutter.sh
+#source ~/.bash/.bash-completion-cookiecutter.sh
 #source ~/.bash/.bash-completion-vagrant.sh
+source ~/.bash/.bash-completion-invoke.sh
 source ~/.bash/.bash-completion-pip.sh
+source ~/.bash/.bash-completion-pipenv.sh
 source ~/.bash/.bash-completion-docker.sh
 source ~/.bash/.bash-completion-docker-composer.sh
 source ~/.bash/.bash-completion-makefile.sh
 source ~/.bash/.bash-completion-tox.sh
-[[ -f "/usr/local/etc/bash_completion.d/password-store" ]] && source /usr/local/etc/bash_completion.d/password-store
-#source ~/.pyenv/completions/pyenv.bash
 
-# /data/VENV/sax/bin/supervisord -c ${HOME}/supervisord/supervisor.ini 2>/dev/null
+eval "$(direnv hook bash)"
+
+#source <(kubectl completion bash)
+#[[ -f "/usr/local/etc/bash_completion.d/password-store" ]] && source /usr/local/etc/bash_completion.d/password-store
+#source ~/.pyenv/completions/pyenv.bash
 
 # [[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'
 # shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
@@ -107,8 +113,9 @@ source ~/.bash/.bash-completion-tox.sh
 ### Added by the Heroku Toolbelt
 # export PATH="/usr/local/heroku/bin:$PATH"
 
-#docker-machine start default 2>/dev/null
-#eval "$(docker-machine env default)"
 
-# added by travis gem
-#[ -f /Users/sax/.travis/travis.sh ] && source /Users/sax/.travis/travis.sh
+# The next line updates PATH for the Google Cloud SDK.
+#if [ -f '/Users/sax/Downloads/google-cloud-sdk/path.bash.inc' ]; then source '/Users/sax/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+#if [ -f '/Users/sax/Downloads/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/sax/Downloads/google-cloud-sdk/completion.bash.inc'; fi

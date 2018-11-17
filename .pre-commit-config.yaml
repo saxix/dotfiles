@@ -1,0 +1,27 @@
+exclude: '^$'
+fail_fast: false
+repos:
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+    -   id: check-merge-conflict
+        stages: [commit]
+-   repo: git://github.com/Yelp/detect-secrets
+    rev: 0.9.1
+    hooks:
+    -   id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: (tests/.*|.*/tenant.sql|Pipfile.lock)
+        stages: [push]
+
+-   repo: https://github.com/saxix/pch
+    rev: 233b68a
+    hooks:
+    -   id: check-untracked
+        args:
+        - .
+        stages: [push]
+    -   id: check-forbidden
+        args:
+        - -f
+        - .forbidden

@@ -1,0 +1,3 @@
+#/usr/bin/env bash
+
+rst2html5 $1 | browser

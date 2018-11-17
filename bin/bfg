@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+echo $@
+
+java -jar $HOME/bin/bfg-1.13.0.jar $@

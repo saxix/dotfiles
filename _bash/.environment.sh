@@ -1,55 +1,56 @@
 #!/bin/bash
 
-export PATH=~/bin:/usr/local/bin:$PATH
+#if [ "`shopt -q login_shell`" == "" ];then
+export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+#$i
 
 if [ $(uname) == "Darwin" ];then
-	  export LC_ALL=en_US.UTF-8
-	  export LANG=en_US.UTF-8
-	  # export PATH=/Library/PostgreSQL/9.3/bin:$PATH
-	  export PATH=/usr/local/mysql/bin:/Users/sax/.gem/ruby/2.0.0/bin:/usr/local/sbin:$PATH
+	export LC_ALL=en_US.UTF-8
+	export LANG=en_US.UTF-8
+	export BREW_PREFIX=$(brew --prefix)
     export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.0.13/lib/pkgconfig/
     export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/usr/local/Cellar/mysql/5.7.13/lib/
-
-		# Android SDK
-		export PATH=$PATH:/Users/sax/Library/Android/sdk/tools/bin/
-
-		# GDAL
-		export PATH=$PATH:/Library/Frameworks/GDAL.framework/Versions/2.1/Programs/
-else
-    export PATH=/data/jdk/bin:$PATH
 fi
 DISPLAY=:0.0 ; export DISPLAY
 
-export HOST_VENV=/data/VENV/sax/
 export USER_LOGDIR=${HOME}/logs/
 export USER_TMPDIR=${HOME}/tmp/
+export PGHOST=127.0.0.1
+export PGUSER=postgres
 
+# pipenv
+# http://pipenv-ja.readthedocs.io/ja/latest/advanced.html#configuration-with-environment-variables
+export PIPENV_VENV_IN_PROJECT=1
+#PIPENV_DOTENV_LOCATION=
+#export PIPENV_DONT_LOAD_ENV=0
+export PIPENV_DEFAULT_PYTHON_VERSION=3.6
+export PIPENV_SHELL_FANCY=0
 # expat
-LDFLAGS="$LDFLAGS -L/usr/local/opt/expat/lib"
-CPPFLAGS="$CPPFLAGS -I/usr/local/opt/expat/include"
+if [ $(uname) == "Darwin" ];then
+    export LDFLAGS="-L$BREW_PREFIX/opt/expat/lib $LDFLAGS"
+    export CPPFLAGS="-I$BREW_PREFIX/opt/expat/include $CPPFLAGS"
+fi
 
 # openssl
 if [ $(uname) == "Darwin" ];then
-	LDFLAGS="$LDFLAGS -L$(brew --prefix openssl)/lib"
-	CFLAGS="$CFLAGS -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+    export PATH="/usr/local/opt/openssl/bin:$PATH"
+ 	export LDFLAGS="-L$BREW_PREFIX/openssl/lib $LDFLAGS"
+	export CPPFLAGS="$CPPFLAGS -I$BREW_PREFIX/opt/openssl/include"
+	export PKG_CONFIG_PATH="$PKG_CONFIG_PATH,$BREW_PREFIX/opt/openssl/lib/pkgconfig"
+	export CFLAGS="-I$BREW_PREFIX/openssl/include -I$(xcrun --show-sdk-path)/usr/include $CFLAGS "
 fi
 
 # readline
 if [ $(uname) == "Darwin" ];then
-	LDFLAGS="$LDFLAGS -L$(brew --prefix readline)/lib"
-	CFLAGS="$CFLAGS -I$(brew --prefix readline)/"
+	LDFLAGS="-L$BREW_PREFIX/readline/lib $LDFLAGS"
+	CFLAGS="-I$BREW_PREFIX/readline/ $CFLAGS"
 fi
-
-# Django
-#export DJANGO_14='-e /data/VENV/LIB/django/1.4.x'
-#export DJANGO_15='-e /data/VENV/LIB/django/1.5.x'
-#export DJANGO_16='-e /data/VENV/LIB/django/1.6.x'
-#export DJANGO_17='-e /data/VENV/LIB/django/1.7.x'
-#export DJANGO_DEV='-e /data/VENV/LIB/django/trunk'
 
 # env
 export DJANGO_DIR="/data/VENV/LIB/django/"
 export PROJECT_DIR="/data/PROGETTI/saxix/"
+export PROJECT_HOME="/data/PROGETTI/saxix"
+export WORKON_HOME="/data/VENV"
 
 
 # Java
@@ -78,34 +79,8 @@ shopt -s histappend
 # node
 export NODE_PATH=/data/node_modules
 
-# virtualenvwrapper and pip
-if [ `id -u` != '0' ]; then
-    export WORKON_HOME=/data/VENV
-    export PROJECT_HOME=/data/PROGETTI/saxix
-
-    export VIRTUAL_ENV_DISABLE_PROMPT=1
-    export VIRTUALENV_USE_DISTRIBUTE=0
-#    if [ -e /data/pip_cache/raw ];then
-#        export VIRTUALENV_EXTRA_SEARCH_DIR=/data/pip_cache/raw
-#    fi
-	  export PYENV_ROOT="$HOME/.pyenv"
-
-	  #export VIRTUALENVWRAPPER_PYTHON=${PYENV_ROOT}/shims/python
-    export VIRTUALENVWRAPPER_HOOK_DIR=/data/VENV/.hooks
-    export VIRTUALENVWRAPPER_VIRTUALENV_ARGS=''
-    export VIRTUALENVWRAPPER_VIRTUALENV='virtualenv'
-	  export VIRTUALENVWRAPPER_WORKON_CD=1
-
-    export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    export PIP_REQUIRE_VIRTUALENV=true
-    export PIP_RESPECT_VIRTUALENV=true
-#    export PIP_DOWNLOAD_CACHE=/data/pip_cache
-#    export PIP_USE_MIRRORS=true
-#
-		#export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH
-		#export PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH
-
-fi
+# pip
+export PIP_IGNORE_INSTALLED=1
 
 export EDITOR=vi
 export SVN_EDITOR=$EDITOR

@@ -1,14 +1,17 @@
 #!/bin/bash
 
 if [ -n "$(docker ps -a -q)" ];then
-	docker rm $(docker ps -a -q) -f
+  echo "Removing stopped comntainers"
+	docker rm $(docker ps --filter "status=exited" -q) -f
 fi
 
 # 1. Make sure that exited containers are deleted.
-docker rm -v `docker ps -a -q -f status=exited` 2>/dev/null
+#docker rm -v `docker ps -a -q -f status=exited` 2>/dev/null
 
-# 2. Remove unwanted ‘dangling’ images.
-docker rmi `docker images -f "dangling=true" -q`  2>/dev/null
+echo "Remove unwanted ‘dangling’ images."
+docker rmi `docker images -f "dangling=true" -q`
 
 # 3. Clean ‘vfs’ directory?
 # docker volume rm `docker volume ls -qf dangling=true`  2>/dev/null
+echo "Clean ‘vfs’ directory"
+docker volume prune

@@ -20,6 +20,22 @@ _cdw_completion()
 }
 complete -o default -F _cdw_completion cdw
 
+_cdu_completion()
+{
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+	cur=`_get_cword`
+
+	APPS=`cd "/data/PROGETTI/UNICEF/"; for f in *; do echo $f; done | command \sort`
+    COMPREPLY=( $( compgen -W '$APPS' -- "$cur" ) )
+}
+complete -o default -F _cdu_completion cdu
+
+function cdu {
+	if [ $1 ] ;then
+		cd "/data/PROGETTI/UNICEF/$1/"
+	fi
+}
+
 function cdw {
 	if [ $1 ] ;then
 		cd "/data/PROGETTI/ONU_WorldFoodProgramme/$1/"

@@ -1,0 +1,208 @@
+#!/usr/bin/env bash
+
+BASE=$PWD/.circleci
+
+[[ -f ../.env ]]  && . ../.env
+[[ -f .env ]]  && . .env
+
+USERNAME="unicef"
+PROJECT="${CIRCLE_PROJECT}"
+CONFIG=$BASE/config.yml
+BRANCH=`git st | grep 'On branch' | sed 's/On branch //'`
+TAG=${BRANCH/release\//}
+JOB=build
+VERBOSE=0
+MODE="local"
+DRYRUN="false"
+ECHO="false"
+
+help (){
+    echo "./test-circle.sh"
+    echo " "
+    echo "  -u,--username USERNAME.     CircleCI user. Default '$USERNAME'"
+    echo "  -p,--project PROJECT.       CircleCI project. Default '$PROJECT'"
+    echo "  -b,--branch BRANCH.         VCS branch to use in build. Default '$BRANCH'"
+    echo "  -j,--job JOB.               CircleCI job to trigger. Default '$JOB'"
+    echo "  -t,--tag TAG.               Tag value to pass to CircleCI job. Default '$TAG'"
+    echo "  -c,-config CONFIG.          CircleCI config file. Default '$CONFIG'"
+    echo "  -gh,--github-token TOKEN.   GitHub API token"
+    echo "  -ci,--circle-token TOKEN.   CircleCI API token"
+
+    echo "  -e,--echo                   Echoing curl response"
+    echo "  -r,--remote                 Execute remote call. Run locally otherwise"
+    echo "  -v,--verbose                Verbosity level 0,1,2,3"
+    echo "  --dry-run                   Dry-run mode."
+    echo "  -h,--help                   This help screen"
+    exit 1
+}
+
+#for key in "$@"
+while [ "$1" != "" ]; do
+case $1 in
+    -b=*|--branch=*)
+        BRANCH="${1#*=}"
+        shift # past argument
+        ;;
+    -j=*|--job=*)
+        JOB="${1#*=}"
+        shift # past argument
+        ;;
+    -t=*|--tag=*)
+        TAG="${key#*=}"
+        shift # past argument
+        ;;
+    -v=*|--verbose=*)
+        VERBOSE="${1#*=}"
+        shift # past argument
+        ;;
+    -b|--branch)
+        BRANCH="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -j|--job)
+        JOB="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -t|--tag)
+        TAG="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -q|--quiet)
+        VERBOSE="0"
+        shift # past argument
+        shift # past value
+        ;;
+    -v|--verbose)
+        VERBOSE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -d|--dry-run|--dryrun)
+        DRYRUN="1"
+        shift # past argument
+        ;;
+    -r|--remote)
+        MODE="remote"
+        shift # past argument
+        ;;
+    -e|--echo)
+        ECHO="1"
+        shift # past argument
+        ;;
+    -ci|--circle-token)
+        CIRCLE_TOKEN="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -gh|--github-token)
+        GITHUB_TOKEN="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -c|--config)
+        CONFIG="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -u|--username)
+        USERNAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -p|--project)
+        PROJECT="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -h|--help)
+            help
+            ;;
+    *) echo "unknown option '$1'"
+       help
+       ;;
+esac
+done
+
+if [ "$VERBOSE" -gt "0" ]; then
+    echo "Configuration:"
+    echo "   username:    $USERNAME"
+    echo "   project:     $PROJECT"
+    echo "   branch:      $BRANCH"
+    echo "   tag:         $TAG"
+    echo "   job:         $JOB"
+    echo "   mode:        $MODE"
+    echo "   config:      $CONFIG"
+    echo "   verbose:     $VERBOSE"
+    echo "   dry-run:     $DRYRUN"
+    if [ "$VERBOSE" -gt "2" ];then
+        echo "   Tokens:"
+        echo "      GitHub:   $GITHUB_TOKEN"
+        echo "      CircleCI: $CIRCLE_TOKEN"
+    fi
+fi
+
+#if [ "$DRYRUN" == "1" ];then
+#    exit 0
+#fi
+
+#if [ -z "$GITHUB_TOKEN" ]; then
+#    read -p 'GitHub token: ' GITHUB_TOKEN
+#fi
+
+if [ -z "$PROJECT" ]; then
+    echo '$CIRCLE_PROJECT not set.'
+    read -p 'Project: ' PROJECT
+fi
+
+
+if [ "$TAG" == "latest" ]; then
+    TAG=`curl \
+      -s \
+      -H "Authorization: token ${GITHUB_TOKEN}" \
+      "https://api.github.com/repos/$USERNAME/$PROJECT/releases/latest" | jq -r '.tag_name'`
+fi
+
+if [ ${MODE} == "remote" ];then
+CMD=$(cat<<EOF
+curl --user ${CIRCLE_TOKEN}:
+        --request POST
+        -q
+        --form build_parameters[TAG]=$TAG
+        --form build_parameters[CIRCLE_JOB]=$JOB
+        --form config=@$CONFIG
+        --form notify=false
+            https://circleci.com/api/v1.1/project/github/$USERNAME/$PROJECT/tree/$BRANCH
+EOF
+)
+else
+CMD=$(cat<<EOF
+circleci build  -c $CONFIG \\
+        --job $JOB
+        -e CIRCLE_BUILD_NUM=$RANDOM
+        -e TAG=$TAG
+        -e CIRCLE_PROJECT_USERNAME=$USERNAME
+        -e CIRCLE_PROJECT_REPONAME=$PROJECT
+        -e GITHUB_TOKEN=$GITHUB_TOKEN
+        -e CIRCLE_TOKEN=$CIRCLE_TOKEN
+        --branch=$BRANCH
+EOF
+)
+fi
+
+if [ "$VERBOSE" -gt "1" ]; then
+    # remove tokens if used in scripts to prevent logging of sensitive data
+    echo
+    echo "Command: "
+    if [ "$VERBOSE" -gt "2" ]; then
+        echo "$CMD"
+    else
+        echo "$CMD" | sed -e "s/${CIRCLE_TOKEN}/<token>/g" | sed -e "s/${GITHUB_TOKEN}/<token>/g"
+    fi
+fi
+
+if [ "$DRYRUN" == "false" ]; then
+    $CMD
+fi

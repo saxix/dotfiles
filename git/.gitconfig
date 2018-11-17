@@ -1,5 +1,5 @@
 [github]
-    user = saxix
+	user = sax
 
 [user]
 	name = sax
@@ -11,6 +11,8 @@
     br = branch
     co = checkout
     df = diff
+		clean-branches = remote prune origin
+		cb = remote prune origin
     squash= "!f() { if [ "$1" == ""];then echo 'Usage: git squash <number_of_commits>'; exit 1; fi; git rebase -i HEAD~$1;}; f"
     untracked = ls-files --others --exclude-standard
     ignored = status --ignored
@@ -72,11 +74,11 @@
 [core]
     pager = less -R
     autocrlf = input
-	excludesfile = /Users/sax/.gitignore
+	  excludesfile = /Users/sax/.gitignore
 
 [branch]
     autosetuprebase = always
-	autosetupmerge = true
+	  autosetupmerge = true
 
 
 [format]
@@ -121,9 +123,10 @@
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 	required = true
-	clean = git-lfs clean %f
 
 [diff "tool.p4merge"]
 	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"

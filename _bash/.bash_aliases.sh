@@ -10,16 +10,21 @@ fi
 
 #alias tree='tree -AC -I "*.pyc|_darcs|cabal-dev|dist|state"'
 
-if [ $(uname) == "Linux" ];then
-    alias apt-get='sudo apt-get'
-    alias open='xdg-open'
-elif [ $(uname) == "Darwin" ];then
-    alias broken='find -L . -type l -ls'
-    alias pg-start='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile start'
-    alias pg-stop='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile stop -s -m fast'
+#if [ $(uname) == "Linux" ];then
+#    alias apt-get='sudo apt-get'
+#    alias open='xdg-open'
+#elif [ $(uname) == "Darwin" ];then
+#    alias broken='find -L . -type l -ls'
+#    alias pg-start='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile start'
+#    alias pg-stop='/usr/local/Cellar/postgresql/10.0/bin/pg_ctl -D /usr/local/var/postgres10 -l logfile stop -s -m fast'
+#
+#fi
 
-fi
-
+alias pp='/Users/sax/.local/bin/pipenv'
+alias pe='/Users/sax/.local/bin/pipenv'
+#alias ppi='pipenv install'
+#alias ppd='pipenv install -d'
+#alias ppl='pipenv lock'
 
 alias l='less'
 alias ls='ls -GFh'
@@ -43,9 +48,6 @@ else
     alias route='route -n'
 fi
 
-alias isort="${HOST_VENV}/bin/isort"
-
-
 # These set up/down to do the history searching
 if [[ $- == *i* ]];then
     bind '"\e[A"':history-search-backward
@@ -60,7 +62,7 @@ alias .5='cd ../../../../..'
 
 alias e='$EDITOR $@'
 
-alias mkvirtualenvtemp='mkvirtualenv TEMP__$RANDOM'
+#alias mkvirtualenvtemp='mkvirtualenv TEMP__$RANDOM'
 
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
